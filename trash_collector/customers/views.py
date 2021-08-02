@@ -45,4 +45,22 @@ def create(request):
         return render(request, 'customers/create.html')
 
          
-    
+def suspension(request):
+    user = request.user
+    context = {
+        'user': user
+    }
+    logged_in_customer = Customer.objects.get(user=user)
+    context['logged_in_customer'] = logged_in_customer
+    if request.method == "POST":
+       
+        suspend_start = request.POST.get("suspend_start")
+        suspend_end = request.POST.get("suspend_end")
+        
+
+        logged_in_customer.suspend_start=suspend_start
+        logged_in_customer.suspend_end=suspend_end
+        logged_in_customer.save()
+        return index(request)
+    else:
+        return render(request, 'customers/suspension.html')
