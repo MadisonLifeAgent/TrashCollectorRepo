@@ -6,8 +6,11 @@
 {% block header %} Customer Home {% endblock %}
 
 {% block content %}
+  <!-- Go here if customer logged in -->
   {% if user.is_authenticated %}
     Hello Customer {{ user.username }}!
+    Pick Up Day:  {{ logged_in_customer.pickup_day }}
+  <!-- If user not logged in -->
   {% else %}
     <p>You are at the customer index, but you are not logged in.</p>
     <a href="{% url 'login' %}">Log In</a>
