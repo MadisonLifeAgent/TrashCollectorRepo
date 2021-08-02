@@ -1,4 +1,5 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
+from django.urls import reverse
 from django.shortcuts import render
 from .models import Customer
 
@@ -17,13 +18,31 @@ def index(request):
     try:
         # This line inside the 'try' will return the customer record of the logged-in user if one exists
         logged_in_customer = Customer.objects.get(user=user)
-        context ['logged_in_customer'] = logged_in_customer
-
+        context['logged_in_customer'] = logged_in_customer
     except:
-        # TODO: Redirect the user to a 'create' function to finish the registration process if no customer record found
-        pass
+        return create(request)
 
     # It will be necessary while creating a Customer/Employee to assign request.user as the user foreign key
 
     print(user)
     return render(request, 'customers/index.html', context)
+
+def create(request):
+    if request.method == "POST":
+        name = request.POST.get("name")
+        user = request.user
+        zipcode = request.POST.get("zipcode")
+        pickup_day = request.POST.get("pickup_day")
+        address = request.POST.get("address")
+        suspend_start = None
+        suspend_end = None
+        balance = 0
+
+        new_customer = Customer(name=name, user=user, zipcode=zipcode, pickup_day=pickup_day, address=address, suspend_start=suspend_start, suspend_end=suspend_end, balance=balance)
+        new_customer.save()
+        return index(request)
+    else:
+        return render(request, 'customers/create.html')
+
+         
+    
