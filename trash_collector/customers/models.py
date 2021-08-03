@@ -20,3 +20,7 @@ class CompletedPickup(models.Model):
     date = models.DateField(null=False, blank=False, editable=False)
     customer = models.ForeignKey('customers.Customer', blank=True, null=False, on_delete=PROTECT)
     employee = models.ForeignKey('employees.Employee', blank=True, null=False, on_delete=PROTECT)
+
+class Special_pickups(models.Model):
+    date = models.DateField(null=False, blank=False, editable=False)
+    customer = models.ForeignKey('customers.Customer', blank=True, null=False, on_delete=PROTECT)

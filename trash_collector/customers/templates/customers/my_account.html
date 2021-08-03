@@ -15,6 +15,9 @@
         <li>Your weekly Pick Up Day is:  {{ logged_in_customer.pickup_day }}</li>
         <li>Suspend Pickup Dates:  {{ logged_in_customer.suspend_start }} to {{ logged_in_customer.suspend_end }}</li>
     </ul>
+
+    <a href="{% url 'customers:index' %}"  class="btn btn-primary">Back</a>
+
   <!-- If user not logged in -->
   {% else %}
     <p>You are at the customer index, but you are not logged in.</p>
