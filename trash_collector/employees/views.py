@@ -28,7 +28,7 @@ def index(request):
     todays_customers = get_only_active_customers(zip_and_day_match_customers, today)
 
     # Retrieve the additional special pickups for today, get the customer they belong to, and add to todays_customers
-    todays_special_pickups = Special_pickups.objects.filter(date = today)
+    todays_special_pickups = Special_pickups.objects.filter(special_pickup_date = today)
     special_pickup_customers = []
     for pickup in todays_special_pickups:
         pickup_customer = Customer.objects.filter(id = pickup.customer_id).filter(zipcode = current_employee.zipcode)
