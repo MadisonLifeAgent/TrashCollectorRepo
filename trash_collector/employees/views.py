@@ -56,6 +56,8 @@ def register_pickup(request):
             current_customer = Customer.objects.get(id=customer_id)
             current_pickup = CompletedPickup(date=today, customer=current_customer, employee=current_employee)
             current_pickup.save()
+            # Charges the customer 1 dollar for each pickup, generic value. Could swap for something better later on
+            charge_customer(current_customer)
 
         return HttpResponseRedirect(reverse("employees:index"))
     else:
@@ -67,7 +69,12 @@ def register_pickup(request):
         }
         return render(request, 'employees/register_pickup.html', context)
 
+def charge_customer(customer):
+    customer.balance += 100
+    customer.save()
+
 def get_eligible_pickup_customers(todays_customers):
+    # Gets all the pickups already completed for today, then compares the customers with a pickup for today and excludes any that overlap
     today = datetime.date.today()
     eligible_pickup_customers = []
     CompletedPickup = apps.get_model('customers', 'CompletedPickup')
