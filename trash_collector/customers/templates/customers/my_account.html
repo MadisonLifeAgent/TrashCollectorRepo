@@ -14,7 +14,16 @@
         <li>Street Address:  {{ logged_in_customer.address }}</li>
         <li>Your weekly Pick Up Day is:  {{ logged_in_customer.pickup_day }}</li>
         <li>Suspend Pickup Dates:  {{ logged_in_customer.suspend_start }} to {{ logged_in_customer.suspend_end }}</li>
-        <li>Special Pickup Date:  {{ logged_in_customer.user.special_pickup_date }}  (To pick a speical pick up date click below)</li>
+
+        <li>Special Pickup Date: 
+            <!-- This for loop queries the special pickup dates db -->
+            {% for special_date in all_special_dates %}
+              {% if special_date.customer == logged_in_customer %}
+                {{ special_date.special_pick_up_date }} 
+              {% endif %}
+            {% endfor %}
+        </li>(Click the button to select a special pickup date)
+
         <a href="{% url 'customers:special_pickup_date' %}"  class="btn btn-primary">Special Pick Up</a>
     </ul>
 

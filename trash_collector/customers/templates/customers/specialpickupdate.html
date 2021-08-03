@@ -9,7 +9,7 @@
   <!-- Go here if customer logged in -->
   {% if user.is_authenticated %}
   <!-- Customer selects a special pick up date here -->
-    <form action="{% url 'customers:suspension' %}" method="post" class="container">
+    <form action="{% url 'customers:special_pickup_date' %}" method="post" class="container">
         {% csrf_token %}
         <div class="form-floating mb-3">
             <label for="special_pickup_date" class="form-label">Date:</label>

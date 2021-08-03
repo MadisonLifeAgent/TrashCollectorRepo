@@ -99,9 +99,11 @@ def my_account(request):
 
     logged_in_customer = Customer.objects.get(user=user)
     context['logged_in_customer'] = logged_in_customer
-    # It will be necessary while creating a Customer/Employee to assign request.user as the user foreign key
 
-    print(user)
+    # query special_pickups db and store all values in dictionary for use on myaccount.html in order to list customer's special pickup dates
+    all_special_dates = get_all_special_pickup_dates(request)
+    
+
     return render(request, 'customers/my_account.html', context)
 
 def special_pickup_date(request):
@@ -117,12 +119,20 @@ def special_pickup_date(request):
     # get special pickup date from form
     if request.method == "POST":
         special_pickup_date = request.POST.get("special_pickup_date")
+        customer = logged_in_customer
 
         #saves new user pickup day to database
-        new_special_pickup = Special_pickups(special_pickup_date=special_pickup_date, customer=logged_in_customer.id)
+        new_special_pickup = Special_pickups(special_pickup_date=special_pickup_date, customer=customer)
         new_special_pickup.save()
 
         return index(request)
 
     else:
         return render(request, 'customers/specialpickupdate.html')
+
+
+# gets all info from special pickupdates db
+def get_all_special_pickup_dates(request):
+    all_special_dates = Special_pickups.objects.all()
+
+    return all_special_dates
