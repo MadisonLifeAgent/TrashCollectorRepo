@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models.deletion import PROTECT
 from django.db.models.fields import CharField
 # Create your models here.
 
@@ -17,5 +18,5 @@ class Customer(models.Model):
 
 class CompletedPickup(models.Model):
     date = models.DateField(null=False, blank=False, editable=False)
-    customer = models.ForeignKey('customers.Customer', blank=True, null=False)
-    employee = models.ForeignKey('employees.Employee', blank=True, null=False)
+    customer = models.ForeignKey('customers.Customer', blank=True, null=False, on_delete=PROTECT)
+    employee = models.ForeignKey('employees.Employee', blank=True, null=False, on_delete=PROTECT)
