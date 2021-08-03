@@ -16,11 +16,13 @@ class Customer(models.Model):
     suspend_end = models.DateField(null=True, editable=True, blank=True)
     balance = models.IntegerField(default=0, blank=True)
 
+# completed pickups class
 class CompletedPickup(models.Model):
     date = models.DateField(null=False, blank=False, editable=False)
     customer = models.ForeignKey('customers.Customer', blank=True, null=False, on_delete=PROTECT)
     employee = models.ForeignKey('employees.Employee', blank=True, null=False, on_delete=PROTECT)
 
+# special pick up date class
 class Special_pickups(models.Model):
     date = models.DateField(null=False, blank=False, editable=False)
     customer = models.ForeignKey('customers.Customer', blank=True, null=False, on_delete=PROTECT)
