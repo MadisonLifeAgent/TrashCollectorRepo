@@ -11,9 +11,12 @@
 {% if user.is_authenticated %}
   {% for group in user.groups.all%}
     {% if group.name == "Customers" %}
-    <p>Customer Home Page</p>
+    <!--  <p>Customer Account</p>   -->
         <!--- Customer Navigation Bar -->
+        <a id="navbar" href="{% url 'customers:index' %}">Customer Home Page</a>
+        <a id="navbar" href="{% url 'customers:my_account' %}">My Account</a>
         <a id="navbar" href="{% url 'customers:pickup_day' %}">Change Pick Up Day</a>
+        <a id="navbar" href="{% url 'customers:suspension' %}">Suspend Pick Up</a>
 
     {% elif group.name == "Employees" %}
     <p>Employee Navbar</p>

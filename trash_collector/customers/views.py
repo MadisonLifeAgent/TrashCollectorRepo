@@ -80,7 +80,7 @@ def pickup_day(request):
     if request.method == "POST":
         pickup_day = request.POST.get("pickup_day")
 
-        #saves new user pickup day
+        #saves new user pickup day to database
         logged_in_customer.pickup_day=pickup_day
         logged_in_customer.save()
 
@@ -88,3 +88,18 @@ def pickup_day(request):
 
     else:
         return render(request, 'customers/pickup_day.html')
+
+
+def my_account(request):
+    # The following line will get the logged-in in user (if there is one) within any view function
+    user = request.user
+    context = {
+        'user': user
+    }
+
+    logged_in_customer = Customer.objects.get(user=user)
+    context['logged_in_customer'] = logged_in_customer
+    # It will be necessary while creating a Customer/Employee to assign request.user as the user foreign key
+
+    print(user)
+    return render(request, 'customers/my_account.html', context)

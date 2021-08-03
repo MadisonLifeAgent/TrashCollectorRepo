@@ -3,13 +3,12 @@
 
 {% block title %} Customer Home {% endblock %}
 
-{% block header %} Customer Home {% endblock %}
+{% block header %} Hello {{ user.username }}!  {% endblock %}
 
 {% block content %}
   <!-- Go here if customer logged in -->
   {% if user.is_authenticated %}
-    Hello Customer {{ user.username }}!
-    Pick Up Day:  {{ logged_in_customer.pickup_day }}
+    <h4>Your weekly Pick Up Day is:  {{ logged_in_customer.pickup_day }}</h4>
   <!-- If user not logged in -->
   {% else %}
     <p>You are at the customer index, but you are not logged in.</p>
