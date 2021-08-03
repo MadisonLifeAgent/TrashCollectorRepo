@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %}{% block header %} Register New Pickup {% endblock %}{% endblock %}
+
+{% block content %}
+  {% if user.is_authenticated %}
+    Hello Employee {{ user.username }}!
+
+    <h1 class="container-fluid">Eligible Customers: </h1>
+
+    <form action="{% url 'employees:register_pickup' %}" method="post" class="container">
+        {% csrf_token %}
+        <div class="list-group">
+            {% for customer in eligible_customers %}
+            <label class="list-group-item">
+                <input class="form-check-input me-1" type="checkbox" value="{{customer.pk}}" name="customer_checks">
+                {{customer.name}} {{customer.address}}
+            </label>
+            {% endfor %}
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  {% else %}
+    <p>You are at the employee index, but you are not logged in.</p>
+    <a href="{% url 'login' %}">Log In</a>
+    <a href="{% url 'accounts:register' %}">Sign Up</a>
+  {% endif %}
+{% endblock %}
