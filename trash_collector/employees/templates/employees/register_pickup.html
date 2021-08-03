@@ -4,9 +4,9 @@
 
 {% block content %}
   {% if user.is_authenticated %}
-    Hello Employee {{ user.username }}!
+    <h3>Hello {{ user.username }}! </h3>
 
-    <h1 class="container-fluid">Eligible Customers: </h1>
+    <h4 class="container-fluid">Eligible Customers: </h4>
 
     <form action="{% url 'employees:register_pickup' %}" method="post" class="container">
         {% csrf_token %}

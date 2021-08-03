@@ -4,11 +4,14 @@
 
 {% block header %} Login Page {% endblock %}
 
+
+<div class="container-fluid p4">
 {% block content %}
-<h2>Log In</h2>
+<h3>Enter your login credentials</h3>
 <form method="post">
   {% csrf_token %}
   {{ form.as_p }}
-  <button type="submit">Log In</button>
+  <button class="btn btn-primary" type="submit">Log In</button>
 </form>
 {% endblock %}
+</div>

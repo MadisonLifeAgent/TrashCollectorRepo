@@ -19,7 +19,7 @@
     <!--  <p>Customer Account</p>   -->
         <!--- Customer Navigation Bar -->
         <nav class="navbar navbar-inverse">
-          <div class="container-fluid">
+          <div class="container">
             <ul class="nav navbar-nav">
               <li class="nav-item">
                 <a href="{% url 'customers:index' %}">Customer Home</a>
@@ -37,13 +37,28 @@
           </div>
         </nav>
 
-        <div class="container-fluid p-4">
+        <div class="container">
           <p><a class="btn btn-primary" href="{% url 'logout' %}">Log Out</a></p>
         </div>
     
     <!-- If an employee go here -->
     {% elif group.name == "Employees" %}
-    <p>Employee Navbar</p>
+    <nav class="navbar navbar-inverse">
+      <div class="container-fluid">
+        <ul class="nav navbar-nav">
+          <li class="nav-item">
+            <a href="{% url 'employees:index' %}">Employee Home</a>
+          </li>
+          <li class="nav-item">
+            <a href="{% url 'employees:register_pickup' %}">Register New Pickups</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <div class="container-fluid p-4">
+      <p><a class="btn btn-primary" href="{% url 'logout' %}">Log Out</a></p>
+    </div>
     {% endif %}
   {% endfor %}
 {% endif %}
