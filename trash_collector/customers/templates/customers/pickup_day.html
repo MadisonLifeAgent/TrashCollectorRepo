@@ -8,19 +8,23 @@
 {% block content %}
   <!-- Go here if customer logged in -->
   {% if user.is_authenticated %}
-    <h1 class="container-fluid"> Edit your Weekly Pickup Day: </h1>
 
     <!-- form to change Pickup Day -->
     <form action="{% url 'customers:pickup_day' %}" method="post" class="container">
         {% csrf_token %}
-        <div class="form-floating mb-3">
-            <label for="pickup_day" class="form-label">Enter your new Pickup Day:</label>
-            <input type="text" name="pickup_day" id="pickup_day" class="form-control">
+        <div class="form-floating m-3">
+            <label for="pickup_day" class="form-label">Enter a new Pickup Day:</label>
+            <div class="row">
+              <div class="col-sm-3">
+                <input type="text" name="pickup_day" id="pickup_day" value="i.e. Monday" class="form-control">
+              </div>
+            </div>
         </div>
       
         <!-- submit change -->
-        <button type="submit" class="btn btn-primary">Submit</button>
-        <a href="{% url 'customers:index' %}"  class="btn btn-primary">Back</a>
+        <br>
+        <button type="submit" class="btn btn-success">Submit</button>
+        <a href="{% url 'customers:index' %}"  class="btn btn-danger">Back</a>
     </form>
   
   {% endif %}

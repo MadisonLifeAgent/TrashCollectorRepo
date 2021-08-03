@@ -8,30 +8,41 @@
 {% block content %}
   <!-- Go here if customer logged in -->
   {% if user.is_authenticated %}
-  <h3>Your Current Balance is:  ${{ logged_in_customer.balance }}</h3>
-    <ul>
-        <li>Name: {{ logged_in_customer.name}}</li>
-        <li>Street Address:  {{ logged_in_customer.address }}</li>
-        <li>Your weekly Pick Up Day is:  {{ logged_in_customer.pickup_day }}</li>
-        <li>Suspend Pickup Dates:  {{ logged_in_customer.suspend_start }} to {{ logged_in_customer.suspend_end }}</li>
+  <div class="container-fluid p-4">
 
-        <ul>
-              <!-- This for loop queries the special pickup dates db -->
-              {% for special_date in all_special_dates %}
-              <li>Special Pickup Date: 
+    <h3>Your Current Balance is:  ${{ logged_in_customer.balance }}</h3>
+      <dl>
+          <dt>Name:</dt>
+            <dd>{{ logged_in_customer.name}}</dd><br>
+          <dt>Street Address:</dt>
+            <dd>{{ logged_in_customer.address }}</dd><br>
+          <dt>Zip Code:</dt>
+            <dd>{{ logged_in_customer.zipcode }}</dd><br>
+          <dt>Your weekly Pick Up Day is:</dt>
+            <dd>{{ logged_in_customer.pickup_day }}</dd><br>
+          <dt>Suspend Pickup Dates:</dt>
+            <dd>{{ logged_in_customer.suspend_start }} to {{ logged_in_customer.suspend_end }}</dd><br>
 
-                {% if special_date.customer == logged_in_customer %}
-                  {{ special_date.special_pickup_date }} 
-                {% endif %}
-              </li>
-              {% endfor %}
-          (Click the button to select a special pickup date)
-        </ul>
+          <dl>
+            <dt>Special Pickup Date(s):</dt>
+                <!-- This for loop queries the special pickup dates db -->
+                {% for special_date in all_special_dates %}
+                <dd>
 
-        <a href="{% url 'customers:special_pickup_date' %}"  class="btn btn-primary">Special Pick Up</a>
-    </ul>
+                  {% if special_date.customer == logged_in_customer %}
+                    {{ special_date.special_pickup_date }} 
+                  {% endif %}
+                </dd>
+                {% endfor %}
+            <br>
+            (Click button to add a special pickup date)
+          </dl>
 
-    <a href="{% url 'customers:index' %}"  class="btn btn-primary">Back</a>
+          <a href="{% url 'customers:special_pickup_date' %}"  class="btn btn-success">Add Special Pickup</a>
+      </dl>
+
+      <a href="{% url 'customers:index' %}"  class="btn btn-primary">Back</a>
+    </div>
 
   <!-- If user not logged in -->
   {% else %}
