@@ -15,14 +15,18 @@
         <li>Your weekly Pick Up Day is:  {{ logged_in_customer.pickup_day }}</li>
         <li>Suspend Pickup Dates:  {{ logged_in_customer.suspend_start }} to {{ logged_in_customer.suspend_end }}</li>
 
-        <li>Special Pickup Date: 
-            <!-- This for loop queries the special pickup dates db -->
-            {% for special_date in all_special_dates %}
-              {% if special_date.customer == logged_in_customer %}
-                {{ special_date.special_pick_up_date }} 
-              {% endif %}
-            {% endfor %}
-        </li>(Click the button to select a special pickup date)
+        <ul>
+              <!-- This for loop queries the special pickup dates db -->
+              {% for special_date in all_special_dates %}
+              <li>Special Pickup Date: 
+
+                {% if special_date.customer == logged_in_customer %}
+                  {{ special_date.special_pickup_date }} 
+                {% endif %}
+              </li>
+              {% endfor %}
+          (Click the button to select a special pickup date)
+        </ul>
 
         <a href="{% url 'customers:special_pickup_date' %}"  class="btn btn-primary">Special Pick Up</a>
     </ul>

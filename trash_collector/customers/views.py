@@ -102,7 +102,8 @@ def my_account(request):
 
     # query special_pickups db and store all values in dictionary for use on myaccount.html in order to list customer's special pickup dates
     all_special_dates = get_all_special_pickup_dates(request)
-    
+    context['all_special_dates'] = all_special_dates
+
 
     return render(request, 'customers/my_account.html', context)
 
