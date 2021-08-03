@@ -9,7 +9,6 @@
   <!-- Go here if customer logged in -->
   {% if user.is_authenticated %}
   <!-- Customer selects a special pick up date here -->
-    <h1 class="container-fluid"> Pick a Special Pickup Date: </h1>
     <form action="{% url 'customers:suspension' %}" method="post" class="container">
         {% csrf_token %}
         <div class="form-floating mb-3">
@@ -18,7 +17,7 @@
         </div>
 
         <button type="submit" class="btn btn-primary">Submit changes</button>
-        <a href="{% url 'customers:index' %}"  class="btn btn-primary">Back</a>
+        <a href="{% url 'customers:my_account' %}"  class="btn btn-primary">Back</a>
     </form>
   
   {% endif %}

@@ -24,5 +24,5 @@ class CompletedPickup(models.Model):
 
 # special pick up date class
 class Special_pickups(models.Model):
-    date = models.DateField(null=False, blank=False, editable=False)
+    special_pickup_date = models.DateField(null=False, blank=False, editable=False)
     customer = models.ForeignKey('customers.Customer', blank=True, null=False, on_delete=PROTECT)

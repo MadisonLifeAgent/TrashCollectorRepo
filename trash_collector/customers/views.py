@@ -1,7 +1,7 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 from django.shortcuts import render
-from .models import Customer
+from .models import Customer, Special_pickups
 
 # Create your views here.
 
@@ -116,11 +116,11 @@ def special_pickup_date(request):
 
     # get special pickup date from form
     if request.method == "POST":
-        special_pickup_date = request.POST.get("special_pickup")
+        special_pickup_date = request.POST.get("special_pickup_date")
 
         #saves new user pickup day to database
-        logged_in_customer.customer.special_pickup_date=special_pickup_date
-        logged_in_customer.save()
+        new_special_pickup = Special_pickups(special_pickup_date=special_pickup_date, customer=logged_in_customer.id)
+        new_special_pickup.save()
 
         return index(request)
 
