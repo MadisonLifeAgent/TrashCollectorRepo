@@ -103,3 +103,26 @@ def my_account(request):
 
     print(user)
     return render(request, 'customers/my_account.html', context)
+
+def special_pickup_date(request):
+    # The following line will get the logged-in in user (if there is one) within any view function
+    user = request.user
+    context = {
+        'user': user
+    }
+
+    logged_in_customer = Customer.objects.get(user=user)
+    context['logged_in_customer'] = logged_in_customer
+
+    # get special pickup date from form
+    if request.method == "POST":
+        special_pickup_date = request.POST.get("special_pickup")
+
+        #saves new user pickup day to database
+        logged_in_customer.customer.special_pickup_date=special_pickup_date
+        logged_in_customer.save()
+
+        return index(request)
+
+    else:
+        return render(request, 'customers/specialpickupdate.html')
