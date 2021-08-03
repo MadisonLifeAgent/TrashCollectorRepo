@@ -14,3 +14,8 @@ class Customer(models.Model):
     suspend_start = models.DateField(null=True, editable=True, blank=True)
     suspend_end = models.DateField(null=True, editable=True, blank=True)
     balance = models.IntegerField(default=0, blank=True)
+
+class CompletedPickup(models.Model):
+    date = models.DateField(null=False, blank=False, editable=False)
+    customer = models.ForeignKey('customers.Customer', blank=True, null=False)
+    employee = models.ForeignKey('employees.Employee', blank=True, null=False)
