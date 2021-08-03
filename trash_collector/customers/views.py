@@ -27,6 +27,7 @@ def index(request):
     print(user)
     return render(request, 'customers/index.html', context)
 
+# create a new customer
 def create(request):
     if request.method == "POST":
         name = request.POST.get("name")
@@ -44,7 +45,7 @@ def create(request):
     else:
         return render(request, 'customers/create.html')
 
-         
+# channge or pick suspension dates    
 def suspension(request):
     user = request.user
     context = {
@@ -64,3 +65,26 @@ def suspension(request):
         return index(request)
     else:
         return render(request, 'customers/suspension.html')
+
+# change regular pickup day
+def pickup_day(request):
+    user = request.user
+    context = {
+        'user': user
+    }
+
+    logged_in_customer = Customer.objects.get(user=user)
+    context['logged_in_customer'] = logged_in_customer
+    
+    # get pickup day from form
+    if request.method == "POST":
+        pickup_day = request.POST.get("pickup_day")
+
+        #saves new user pickup day
+        logged_in_customer.pickup_day=pickup_day
+        logged_in_customer.save()
+
+        return index(request)
+
+    else:
+        return render(request, 'customers/pickup_day.html')
