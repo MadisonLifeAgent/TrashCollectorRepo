@@ -19,7 +19,11 @@ def index(request):
 
     # Get the current user and the associated employee object
     current_user = request.user
-    current_employee = Employee.objects.get(user = current_user)
+
+    try:
+        current_employee = Employee.objects.get(user = current_user)
+    except:
+        return create(request)
 
     todays_customers = get_todays_customers(current_employee)
 
@@ -29,6 +33,19 @@ def index(request):
     }
 
     return render(request, 'employees/index.html', context)
+
+
+def create(request):
+    if request.method == "POST":
+        name = request.POST.get("name")
+        user = request.user
+        zipcode = request.POST.get("zipcode")
+
+        new_employee = Employee(name=name, user=user, zipcode=zipcode)
+        new_employee.save()
+        return index(request)
+    else:
+        return render(request, 'employees/create.html')
 
 
 def register_pickup(request):
