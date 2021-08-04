@@ -8,41 +8,89 @@
 {% block content %}
   <!-- Go here if customer logged in -->
   {% if user.is_authenticated %}
-  <div class="container-fluid p-4">
+  <div class="container-fluid m-3">
 
-    <h3>Your Current Balance is:  ${{ logged_in_customer.balance }}</h3>
-      <dl>
-          <dt>Name:</dt>
-            <dd>{{ logged_in_customer.name}}</dd><br>
-          <dt>Street Address:</dt>
-            <dd>{{ logged_in_customer.address }}</dd><br>
-          <dt>Zip Code:</dt>
-            <dd>{{ logged_in_customer.zipcode }}</dd><br>
-          <dt>Your weekly Pick Up Day is:</dt>
-            <dd>{{ logged_in_customer.pickup_day }}</dd><br>
-          <dt>Suspend Pickup Dates:</dt>
-            <dd>{{ logged_in_customer.suspend_start }} to {{ logged_in_customer.suspend_end }}</dd><br>
+    <h3 class="mb-5">Your Current Balance is:  ${{ logged_in_customer.balance }}</h3>
 
-          <dl>
-            <dt>Special Pickup Date(s):</dt>
-                <!-- This for loop queries the special pickup dates db -->
-                {% for special_date in all_special_dates %}
-                <dd>
+    <div class="container">
+        <dl>
+          <div class="row">
+            <div class="col-sm-4">
+              <dt>Name:</dt>
+            </div>
+            <div class="col-sm-4">
+              <dd>{{ logged_in_customer.name}}</dd><br>
+            </div>
+          </div>
 
-                  {% if special_date.customer == logged_in_customer %}
-                    {{ special_date.special_pickup_date }} 
-                  {% endif %}
-                </dd>
-                {% endfor %}
-            <br>
-            (Click button to add a special pickup date)
-          </dl>
+          <div class="row">
+            <div class="col-sm-4">
+              <dt>Street Address:</dt>
+            </div>
+            <div class="col-sm-4">
+              <dd>{{ logged_in_customer.address }}</dd><br>
+            </div>
+          </div>
 
-          <a href="{% url 'customers:special_pickup_date' %}"  class="btn btn-success">Add Special Pickup</a>
-      </dl>
+          <div class="row">
+            <div class="col-sm-4">
+              <dt>Zip Code:</dt>
+            </div>
+            <div class="col-sm-4">
+              <dd>{{ logged_in_customer.zipcode }}</dd><br>
+            </div>
+          </div>
 
-      <a href="{% url 'customers:index' %}"  class="btn btn-primary">Back</a>
+          <div class="row">
+            <div class="col-sm-4">
+              <dt>Your weekly Pick Up Day is:</dt>
+            </div>
+            <div class="col-sm-4">
+              <dd>{{ logged_in_customer.pickup_day }}</dd><br>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-4">
+              <dt>Pickup Suspension Period:</dt>
+            </div>
+            <div class="col-sm-4">
+              <dd>{{ logged_in_customer.suspend_start }} to {{ logged_in_customer.suspend_end }}</dd><br>
+            </div>
+          </div>
+
+
+            <dl>
+              <div class="row">
+                <div class="col-sm-4">
+                  <dt>Special Pickup Date(s):</dt>
+                </div>
+                <div class="col-sm-4">
+                  <!-- This for loop queries the special pickup dates db -->
+                  {% for special_date in all_special_dates %}
+                  <dd>
+                    {% if special_date.customer == logged_in_customer %}
+                      {{ special_date.special_pickup_date }} 
+                    {% endif %}
+                  </dd>
+                  {% endfor %}
+              <br>
+                </div>
+              </div>
+            </dl>
+          <div class="row">
+            <div class="col-sm-4">
+              <dt>(Click to add a special pickup date)</dt>
+            </div>
+            <div class="col-sm-4">
+              <dd><a href="{% url 'customers:special_pickup_date' %}"  class="btn btn-success text-uppercase">Add Special Pickup</a></dd><br>
+            </div>
+          </div>
+        </dl>
+
+        <a href="{% url 'customers:index' %}"  class="btn btn-primary text-uppercase">Back</a>
     </div>
+  </div>
 
   <!-- If user not logged in -->
   {% else %}

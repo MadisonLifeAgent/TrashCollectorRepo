@@ -2,16 +2,17 @@
 
 {% block title %} Login Page {% endblock %}
 
-{% block header %} Login Page {% endblock %}
+{% block header %} Enter Your Login Credentials {% endblock %}
 
 
-<div class="container-fluid p4">
-{% block content %}
-<h3>Enter your login credentials</h3>
-<form method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button class="btn btn-primary" type="submit">Log In</button>
-</form>
+  {% block content %}
+
+  <div class="container-fluid m-3">
+    <form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button class="btn btn-primary" type="submit">Log In</button>
+    </form>
+  </div>
 {% endblock %}
 </div>

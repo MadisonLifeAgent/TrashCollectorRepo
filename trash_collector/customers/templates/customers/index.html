@@ -6,13 +6,14 @@
 {% block header %} Hello {{ user.username }}! {% endblock %}
 
 {% block content %}
-  <!-- Go here if customer logged in -->
-  {% if user.is_authenticated %}
-    <h4>Your weekly Pick Up Day is:  {{ logged_in_customer.pickup_day }}</h4>
-  <!-- If user not logged in -->
-  {% else %}
-    <p>You are at the customer index, but you are not logged in.</p>
-    <a href="{% url 'login' %}">Log In</a>
-    <a href="{% url 'accounts:register' %}">Sign Up</a>
-  {% endif %}
+<!-- Go here if customer logged in -->
+{% if user.is_authenticated %}
+  <h4>Your weekly Pick Up Day is:  {{ logged_in_customer.pickup_day }}</h4>
+<!-- If user not logged in -->
+{% else %}
+  <p>You are at the customer index, but you are not logged in.</p>
+  <a href="{% url 'login' %}">Log In</a></button>
+  <a href="{% url 'accounts:register' %}">Sign Up</a>
+</div>
+{% endif %}
 {% endblock %}

@@ -66,10 +66,15 @@
   {% endfor %}
 {% endif %}
   <main>
-    <div class="container-fluid">
-      <h1>{% block header %} {% endblock %}</h1>
-    {% block content %}
-    {% endblock %}
+    <div class="container-fluid m-2">
+      <div class="row">
+        <h1>{% block header %} {% endblock %}</h1>
+      </div>
+
+      <div class="container-fluid">
+        {% block content %}
+        {% endblock %}
+      </div>
     </div>
 
   </main>

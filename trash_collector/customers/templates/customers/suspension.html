@@ -10,23 +10,23 @@
   {% if user.is_authenticated %}
     <form action="{% url 'customers:suspension' %}" method="post" class="container">
         {% csrf_token %}
-        <div class="form-floating mb-3">
-            <label for="suspend_start" class="form-label">Suspension start date:</label>
-            <div class="row">
-                <div class="col-sm-3">
-                  <input type="date" name="suspend_start" id="suspend_start" class="form-control">
-                </div>
+        <div class="container-fluid m-2">
+          <div class="row col-6">
+            <div class="input-group">
+              <span class="input-group-text mb-2 col-6">Suspension Start Date:</span>
+              <input type="date" name="suspend_start" id="suspend_start" class="form-control mb-2 col-6">
             </div>
+          </div>
         </div>
 
         <br>
-        <div class="form-floating mb-3">
-            <label for="suspend_end" class="form-label">Suspension end date:</label>
-            <div class="row">
-              <div class="col-sm-3">
-                <input type="date" name="suspend_end" id="suspend_end" class="form-control">
-              </div>
+        <div class="container-fluid m-2">
+          <div class="row col-6">
+            <div class="input-group">
+              <span class="input-group-text mb-2 col-6">Suspension End Date:</span>
+              <input type="date" name="suspend_end" id="suspend_end" class="form-control mb-2 col-6">
             </div>
+          </div>
         </div>
        
         <br>
