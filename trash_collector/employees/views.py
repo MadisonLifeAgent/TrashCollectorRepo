@@ -93,6 +93,30 @@ def search_completed_pickups(request):
     return render(request, 'employees/search_completed_pickups.html', context)
 
 
+def customers_by_day(request):
+    current_user = request.user
+    current_employee = Employee.objects.get(user_id=current_user.pk)
+    matched_customers = Customer.objects.filter(zipcode=current_employee.zipcode)
+    
+    if request.method == "POST":
+        filter_date = request.POST.get("filter_date")
+    else:
+        filter_date = "Monday"
+
+    matched_customers = get_customers_by_pickup_day(current_employee, filter_date)
+
+    context = {
+        "user": current_user,
+        "matched_customers": matched_customers,
+        "selected_day": filter_date
+    }
+
+    return render(request, 'employees/customers_by_day.html', context)
+
+def get_customers_by_pickup_day(employee, weekday):
+    return Customer.objects.filter(pickup_day=weekday).filter(zipcode=employee.zipcode)
+
+
 def pickup_search_results(employee, date, customer):
     if date and customer:
         return CompletedPickup.objects.filter(employee_id=employee.pk).filter(date=date).filter(customer_id=customer.pk).order_by('date')
@@ -146,7 +170,6 @@ def get_todays_customers(current_employee):
     todays_customers = merge_unique_customers(todays_customers, active_special_pickup_customers)
 
     return todays_customers
-
 
 def get_weekday_string(day):
     day_num = day.weekday()

@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}{% block header %} Employee Home {% endblock %}{% endblock %}
+
+{% block content %}
+  {% if user.is_authenticated %}
+    Hello Employee {{ user.username }}!
+
+    <form action="{% url 'employees:customers_by_day' %}" method="post" class="container">
+        {% csrf_token %}
+        <div class="dropdown">
+            <select name="filter_date">
+              <option class="dropdown-item" value="none" selected disabled hidden> Select A Day </option>
+              <option class="dropdown-item" value="Monday"> "Monday"</option>
+              <option class="dropdown-item" value="Tuesday"> "Tuesday"</option>
+              <option class="dropdown-item" value="Wednesday"> "Wednesday"</option>
+              <option class="dropdown-item" value="Thursday"> "Thursday"</option>
+              <option class="dropdown-item" value="Friday"> "Friday"</option>
+              <option class="dropdown-item" value="Saturday"> "Saturday"</option>
+              <option class="dropdown-item" value="Sunday"> "Sunday"</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Search This Day</button>
+    </form>
+
+    <h1 class="container-fluid">Search Results for {{selected_day}}: </h1>
+    <ul class="list-group list-group-flush">
+        {% for customer in matched_customers %}
+        <li class="list-group-item"><h2> {{customer.name}}  {{customer.address}} </h2></li>
+        {% endfor %}
+    </ul>
+
+  {% else %}
+    <p>You are at the employee index, but you are not logged in.</p>
+    <a href="{% url 'login' %}">Log In</a>
+    <a href="{% url 'accounts:register' %}">Sign Up</a>
+  {% endif %}
+{% endblock %}
