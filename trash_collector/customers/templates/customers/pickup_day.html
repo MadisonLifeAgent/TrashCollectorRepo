@@ -12,20 +12,30 @@
     <!-- form to change Pickup Day -->
     <form action="{% url 'customers:pickup_day' %}" method="post" class="container">
         {% csrf_token %}
-        <div class="form-floating m-3">
-            <label for="pickup_day" class="form-label">Enter a new Pickup Day:</label>
-            <div class="row">
-              <div class="col-sm-3">
-                <input type="text" name="pickup_day" id="pickup_day" value="i.e. Monday" class="form-control">
-              </div>
-            </div>
-        </div>
-      
+       
+          <label for="pickup_day" class="form-label">Enter a new Pickup Day:</label>
+          {% csrf_token %}
+          <div class="dropdown">
+            <select name="pickup_day">
+              <option class="dropdown-item" value="none" selected disabled hidden> Select A Day </option>
+              <option class="dropdown-item" value="Monday"> "Monday"</option>
+              <option class="dropdown-item" value="Tuesday"> "Tuesday"</option>
+              <option class="dropdown-item" value="Wednesday"> "Wednesday"</option>
+              <option class="dropdown-item" value="Thursday"> "Thursday"</option>
+              <option class="dropdown-item" value="Friday"> "Friday"</option>
+              <option class="dropdown-item" value="Saturday"> "Saturday"</option>
+              <option class="dropdown-item" value="Sunday"> "Sunday"</option>
+            </select>
+          </div>
+            
+          <button type="submit" class="btn btn-success">Submit</button>
+          <a href="{% url 'customers:index' %}"  class="btn btn-danger">Back</a>
+    </form>
+              
         <!-- submit change -->
         <br>
-        <button type="submit" class="btn btn-success">Submit</button>
-        <a href="{% url 'customers:index' %}"  class="btn btn-danger">Back</a>
-    </form>
+        
+       
   
   {% endif %}
 {% endblock %}
