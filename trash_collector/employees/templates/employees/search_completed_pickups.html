@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block title %}{% block header %} Employee Home {% endblock %}{% endblock %}
+
+{% block content %}
+  {% if user.is_authenticated %}
+    Hello Employee {{ user.username }}!
+
+    <form action="{% url 'employees:search_completed_pickups' %}" method="post" class="container">
+        {% csrf_token %}
+        <input type="date" name="filter_date">Search by date </input>
+        <div class="dropdown">
+            <select name="filter_customer">
+              {% for customer in matched_customers %}
+              <option class="dropdown-item" value="{{customer.pk}}"> {{customer.name}} {{customer.address}}</option>
+              {% endfor %}
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+
+    <h1 class="container-fluid">Search Results: </h1>
+    <ul class="list-group list-group-flush">
+        {% for pickup in search_results %}
+        <li class="list-group-item"><h2> {{pickup.customer_id}}  {{pickup.date}} </h2></li>
+        {% endfor %}
+    </ul>
+
+  {% else %}
+    <p>You are at the employee index, but you are not logged in.</p>
+    <a href="{% url 'login' %}">Log In</a>
+    <a href="{% url 'accounts:register' %}">Sign Up</a>
+  {% endif %}
+{% endblock %}

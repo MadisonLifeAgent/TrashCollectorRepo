@@ -1,5 +1,5 @@
 from django.http.response import HttpResponseRedirect
-from customers.models import Customer
+from customers.models import Customer, CompletedPickup
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 from django.shortcuts import render
@@ -29,10 +29,6 @@ def index(request):
     }
 
     return render(request, 'employees/index.html', context)
-
-
-
-
 
 
 def register_pickup(request):
@@ -68,6 +64,45 @@ def register_pickup(request):
             "eligible_customers": eligible_customers
         }
         return render(request, 'employees/register_pickup.html', context)
+
+
+
+def search_completed_pickups(request):
+    current_user = request.user
+    current_employee = Employee.objects.get(user_id=current_user.pk)
+    matched_customers = Customer.objects.filter(zipcode=current_employee.zipcode)
+
+    # Search for completed pickup:
+    # - Filters:
+    # - - Date
+    # - - Customer
+    if request.method == "POST":
+        filter_date = request.POST.get("filter_date")
+        filter_customer_id = request.POST.get("filter_customer")
+        filter_customer = Customer.objects.get(id=filter_customer_id)
+    else:
+        filter_date = None
+        filter_customer = None
+        
+    filtered_results = pickup_search_results(current_employee, filter_date, filter_customer)
+    context = {
+        "search_results": filtered_results,
+        "user": current_user,
+        "matched_customers": matched_customers
+    }
+    return render(request, 'employees/search_completed_pickups.html', context)
+
+
+def pickup_search_results(employee, date, customer):
+    if date and customer:
+        return CompletedPickup.objects.filter(employee_id=employee.pk).filter(date=date).filter(customer_id=customer.pk).order_by('date')
+    elif date:
+        return CompletedPickup.objects.filter(employee_id=employee.pk).filter(date=date).order_by('date')
+    elif customer:
+        return CompletedPickup.objects.filter(employee_id=employee.pk).filter(customer_id=customer.pk).order_by('customer_id')
+    else:
+        return CompletedPickup.objects.filter(employee_id=employee.pk)
+
 
 def charge_customer(customer):
     customer.balance += 100
