@@ -1,11 +1,10 @@
 {% extends 'base.html' %}
 
-{% block title %}{% block header %} Employee Home {% endblock %}{% endblock %}
+{% block title %}{% block header %} Search Completed Pickups {% endblock %}{% endblock %}
 
 {% block content %}
   {% if user.is_authenticated %}
-    Hello Employee {{ user.username }}!
-
+  <p class="fw-bold"></p>
     <form action="{% url 'employees:search_completed_pickups' %}" method="post" class="container">
         {% csrf_token %}
         <input type="date" name="filter_date">Search by date </input>
