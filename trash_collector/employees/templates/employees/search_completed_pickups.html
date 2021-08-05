@@ -4,7 +4,8 @@
 
 {% block content %}
   {% if user.is_authenticated %}
-  <p class="fw-bold"></p>
+  <div class="container-fluid m-3">
+  
     <form action="{% url 'employees:search_completed_pickups' %}" method="post" class="container">
         {% csrf_token %}
         <input type="date" name="filter_date">Search by date </input>
@@ -18,14 +19,18 @@
         </div>
         <button type="submit" class="btn btn-primary">Search</button>
     </form>
-
-    <h1 class="container-fluid">{{search_results_string}}: </h1>
-    <ul class="list-group list-group-flush">
+    <div class="row mb-2">
+      <h1 class="container-fluid">{{search_results_string}}: </h1> 
+    </div>
+    
+    <ul class="row mb-2 col-sm-9">
         {% for pickup in search_results %}
-        <li class="list-group-item"><h2> {{pickup.customer_id}}  {{pickup.date}} </h2></li>
+        <li class="list-group-item col-sm-3 m-1 bg-success rounded border-end border-light text-white text-center p-1"> {{pickup.customer_id}} </li>  
+        <li class="list-group-item col-sm-3 m-1 bg-success rounded border-end border-light text-white text-center p-1"> {{pickup.date}} </li> 
+        <li class="list-group-item col-sm-3 m-1 bg-success rounded border-end border-light text-white text-center p-1"> {{pickup.customer.address}} </li>
         {% endfor %}
     </ul>
-
+  </div>
   {% else %}
     <p>You are at the employee index, but you are not logged in.</p>
     <a href="{% url 'login' %}">Log In</a>
