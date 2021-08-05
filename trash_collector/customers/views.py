@@ -38,10 +38,12 @@ def create(request):
         suspend_start = None
         suspend_end = None
         balance = 0
-
-        new_customer = Customer(name=name, user=user, zipcode=zipcode, pickup_day=pickup_day, address=address, suspend_start=suspend_start, suspend_end=suspend_end, balance=balance)
-        new_customer.save()
-        return index(request)
+        if len(zipcode) == 5 and zipcode.isnumeric():
+            new_customer = Customer(name=name, user=user, zipcode=zipcode, pickup_day=pickup_day, address=address, suspend_start=suspend_start, suspend_end=suspend_end, balance=balance)
+            new_customer.save()
+            return index(request)
+        else:
+            return render(request, 'customers/create.html')
     else:
         return render(request, 'customers/create.html')
 

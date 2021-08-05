@@ -51,10 +51,12 @@ def create(request):
         name = request.POST.get("name")
         user = request.user
         zipcode = request.POST.get("zipcode")
-
-        new_employee = Employee(name=name, user=user, zipcode=zipcode)
-        new_employee.save()
-        return index(request)
+        if len(zipcode) == 5 and zipcode.isnumeric():
+            new_employee = Employee(name=name, user=user, zipcode=zipcode)
+            new_employee.save()
+            return index(request)
+        else:
+            return render(request, 'employees/create.html')
     else:
         return render(request, 'employees/create.html')
 
