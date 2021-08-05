@@ -5,24 +5,33 @@
 {% block content %}
   {% if user.is_authenticated %}
   <div class="container-fluid m-3">
-  
+    
     <form action="{% url 'employees:search_completed_pickups' %}" method="post" class="container">
         {% csrf_token %}
-        <input type="date" name="filter_date">Search by date </input>
-        <div class="dropdown">
-            <select name="filter_customer">
-              <option class="dropdown-item" value="none" selected disabled hidden> Select A Customer </option>
-              {% for customer in matched_customers %}
-              <option class="dropdown-item" value="{{customer.pk}}"> {{customer.name}} {{customer.address}}</option>
-              {% endfor %}
-            </select>
+        <div class="row mb-2 col-sm-9">
+          <div class="input-group">
+            <input class="form-control col-sm-3" type="date" name="filter_date"></input>
+            
+                <select class="form-control dropdown col-sm-5" name="filter_customer">
+                  <option class="dropdown-item" value="none" selected disabled hidden> Select A Customer </option>
+                  {% for customer in matched_customers %}
+                  <option class="dropdown-item" value="{{customer.pk}}"> {{customer.name}} {{customer.address}}</option>
+                  {% endfor %}
+                </select>
+            
+            <button type="submit" class="form-control btn btn-primary col-sm-1">Search</button>
+          </div>
         </div>
-        <button type="submit" class="btn btn-primary">Search</button>
+        
     </form>
-    <div class="row mb-2">
-      <h1 class="container-fluid">{{search_results_string}}: </h1> 
-    </div>
-    
+    <ul class="row mb-2 col-sm-9">
+      <li class="list-group-item col-sm-9 m-1 bg-primary rounded border-end border-light text-white text-center p-1">{{search_results_string}}: </li> 
+    </ul>
+    <ul class="row mb-2 col-sm-9">
+      <li class="list-group-item col-sm-3 m-1 bg-danger rounded border-end border-light text-white text-center p-1"> Customer ID </li>  
+      <li class="list-group-item col-sm-3 m-1 bg-danger rounded border-end border-light text-white text-center p-1"> Pickup Date </li> 
+      <li class="list-group-item col-sm-3 m-1 bg-danger rounded border-end border-light text-white text-center p-1"> Customer Address </li>
+  </ul>
     <ul class="row mb-2 col-sm-9">
         {% for pickup in search_results %}
         <li class="list-group-item col-sm-3 m-1 bg-success rounded border-end border-light text-white text-center p-1"> {{pickup.customer_id}} </li>  
