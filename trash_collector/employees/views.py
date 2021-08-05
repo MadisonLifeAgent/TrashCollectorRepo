@@ -34,7 +34,7 @@ def index(request):
         current_marker = get_customer_api_address(customer)
         markers = markers + "|" + current_marker
 
-    api_url = "https://maps.googleapis.com/maps/api/staticmap?size=600x600&key=AIzaSyAIYNgoTrCaLJinMQtlC0GtUv8T62RU7Ag&markers=" + markers
+    api_url = "https://maps.googleapis.com/maps/api/staticmap?size=600x600&key=AIzaSyAIYNgoTrCaLJinMQtlC0GtUv8T62RU7Ag&markers=" + markers[1:]
 
     context = {
         'user': current_user,
@@ -144,7 +144,7 @@ def customers_by_day(request):
         current_marker = get_customer_api_address(customer)
         markers = markers + "|" + current_marker
 
-    api_url = "https://maps.googleapis.com/maps/api/staticmap?size=600x600&key=AIzaSyAIYNgoTrCaLJinMQtlC0GtUv8T62RU7Ag&markers=" + markers
+    api_url = "https://maps.googleapis.com/maps/api/staticmap?size=600x600&key=AIzaSyAIYNgoTrCaLJinMQtlC0GtUv8T62RU7Ag&markers=" + markers[1:]
 
     context = {
         "user": current_user,

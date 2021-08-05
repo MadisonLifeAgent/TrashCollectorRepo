@@ -4,19 +4,25 @@
 
 {% block content %}
   {% if user.is_authenticated %}
-
-    <h3 class="row col-sm-6 mb-2 bg-warning p-2 rounded">Today's Customers: </h3>
-    
-    <ul class="list-group list-group-flush m-2 rounded">
-        {% for customer in todays_customers %}
-        <li class="list-group-item row col-sm-6 bg-info border border-light fw-bold text-dark">
-          {{customer.name}} <br> 
-          {{customer.address}}
-        </li>
-        {% endfor %}
-    </ul>
-    <a class="btn btn-success" href="{% url 'employees:register_pickup' %}">Register New Pickups</a>
-    <a class="btn btn-success" href="{% url 'employees:search_completed_pickups' %}">Search Completed Pickups</a>
+    <div class="row">
+      <div class="container">
+        <h3 class="row col-sm-6 mb-2 bg-warning p-2 rounded">Today's Customers: </h3>
+        
+        <ul class="list-group list-group-flush m-2 rounded">
+            {% for customer in todays_customers %}
+            <li class="list-group-item row col-sm-6 bg-info border border-light fw-bold text-dark">
+              {{customer.name}} <br> 
+              {{customer.address}}
+            </li>
+            {% endfor %}
+        </ul>
+        <a class="btn btn-success" href="{% url 'employees:register_pickup' %}">Register New Pickups</a>
+        <a class="btn btn-success" href="{% url 'employees:search_completed_pickups' %}">Search Completed Pickups</a>
+      </div>
+      <div class="col-sm-12 col-md-4 embed-responsive embed-responsive-1by1">
+        <img class="embed-responsive-item h-100" title="customer_address_map" src="{{api_url}}" allowfullscreen></iframe>
+      </div>
+    </div
 
   {% else %}
     <p>You are at the employee index, but you are not logged in.</p>

@@ -29,13 +29,18 @@
               <button type="submit" class="btn btn-primary input-group-text text-light fw-bold mb-2 col-sm-3 bg-success rounded">Search</button>
             </div>
           </div>
-          <div class="container-fluid row col-sm-9">
-            <h3 class="mt-2 p-2 bg-success rounded">Search Results for {{selected_day}}: </h3>
-            <ul class="list-group list-group-flush">
-                {% for customer in matched_customers %}
-                <a href="{% url 'employees:customer_detail' customer.id %}"><li class="list-group-item"><h2> {{customer.name}}  {{customer.address}} </h2></li></a>
-                {% endfor %}
-            </ul>
+          <div class="container-fluid row col-sm-12">
+            <div class="container col-sm-12 col-md-7">
+              <h3 class="mt-2 p-2 bg-success rounded">Search Results for {{selected_day}}: </h3>
+              <ul class="list-group list-group-flush">
+                  {% for customer in matched_customers %}
+                  <a href="{% url 'employees:customer_detail' customer.id %}"><li class="list-group-item"><h2> {{customer.name}}  {{customer.address}} </h2></li></a>
+                  {% endfor %}
+              </ul>
+            </div>
+          </div>
+          <div class="col-sm-12 text-center m-2">
+            <img class="rounded img-fluid" alt="Map of Customers" title="customer_address_map" src="{{api_url}}" allowfullscreen></iframe>
           </div>
         </div>
     </form>
