@@ -1,5 +1,5 @@
 from django.http.response import HttpResponseRedirect
-from customers.models import Customer, CompletedPickup
+from customers.models import Customer, CompletedPickup, Special_pickups
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 from django.shortcuts import render
@@ -8,6 +8,8 @@ from .models import Employee
 import datetime
 
 # Create your views here.
+
+
 
 # TODO: Create a function for each path created in employees/urls.py. Each will need a template as well.
 
@@ -136,6 +138,45 @@ def customers_by_day(request):
     }
 
     return render(request, 'employees/customers_by_day.html', context)
+
+
+def customer_detail(request, customer_id):
+    customer = Customer.objects.get(id=customer_id)
+    customer_api_address = get_customer_api_address(customer)
+
+    api_url = f'https://www.google.com/maps/embed/v1/place?key=AIzaSyAIYNgoTrCaLJinMQtlC0GtUv8T62RU7Ag&q={customer_api_address}'
+
+    additional_pickups = Special_pickups.objects.filter(customer_id=customer)
+
+    context = {
+        "customer": customer,
+        "api_url": api_url,
+        "additional_pickups": additional_pickups
+    }
+
+    return render(request, f'employees/customer_detail.html', context)
+
+def get_customer_api_address(customer):
+    #####################################################
+    #### API KEY: AIzaSyAIYNgoTrCaLJinMQtlC0GtUv8T62RU7Ag
+    #### API url format: https://www.google.com/maps/embed/v1/place?key=AIzaSyAIYNgoTrCaLJinMQtlC0GtUv8T62RU7Ag&q=num+st+zip
+    #####################################################
+
+    customer_raw_address = customer.address
+    customer_raw_zipcode = customer.zipcode
+
+    split_address = customer_raw_address.split()
+    formatted_address_no_zip = '+'.join(split_address)
+    api_address = formatted_address_no_zip + '+' + customer_raw_zipcode
+
+    return api_address
+
+
+
+
+
+
+
 
 def get_customers_by_pickup_day(employee, weekday):
     return Customer.objects.filter(pickup_day=weekday).filter(zipcode=employee.zipcode)

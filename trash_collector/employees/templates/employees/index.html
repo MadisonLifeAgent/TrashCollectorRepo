@@ -1,15 +1,18 @@
 {% extends 'base.html' %}
 
-{% block title %}{% block header %} Employee Home {% endblock %}{% endblock %}
+{% block title %}{% block header %} Hello {{ current_employee.name }}! {% endblock %}{% endblock %}
 
 {% block content %}
   {% if user.is_authenticated %}
-    Hello {{ current_employee.name }}!
 
-    <h1 class="container">Today's Customers: </h1>
-    <ul class="list-group list-group-flush">
+    <h3 class="row col-sm-6 mb-2 bg-warning p-2 rounded">Today's Customers: </h3>
+    
+    <ul class="list-group list-group-flush m-2 rounded">
         {% for customer in todays_customers %}
-        <li class="list-group-item"><h2> {{customer.name}}  {{customer.address}} </h2></li>
+        <li class="list-group-item row col-sm-6 bg-info border border-light fw-bold text-dark">
+          {{customer.name}} <br> 
+          {{customer.address}}
+        </li>
         {% endfor %}
     </ul>
     <a class="btn btn-success" href="{% url 'employees:register_pickup' %}">Register New Pickups</a>
