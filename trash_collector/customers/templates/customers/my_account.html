@@ -43,10 +43,10 @@
         <dl>
           <div class="row mb-2">
               <dt class="col-sm-3 m-1 bg-success rounded border-end border-light text-white text-center p-1">Special Pickup Date(s):</dt>
-            <div class="col-sm-4 m-1 bg-primary rounded">
+            <div class="col-sm-4 m-1 bg-primary rounded text-white fw-bold text-center p-1">
               <!-- This for loop queries the special pickup dates db -->
               {% for special_date in all_special_dates %}
-              <dd class="text-white fw-bold text-center p-1">
+              <dd>
                 {% if special_date.customer == logged_in_customer %}
                   {{ special_date.special_pickup_date }} 
                 {% endif %}
