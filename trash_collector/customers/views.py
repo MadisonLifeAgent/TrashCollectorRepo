@@ -80,11 +80,13 @@ def pickup_day(request):
     if request.method == "POST":
         pickup_day = request.POST.get("pickup_day")
 
-        #saves new user pickup day to database
-        logged_in_customer.pickup_day=pickup_day
-        logged_in_customer.save()
+        if pickup_day:#saves new user pickup day to database
+            logged_in_customer.pickup_day=pickup_day
+            logged_in_customer.save()
 
-        return index(request)
+            return index(request)
+        else:
+            return index(request)
 
     else:
         return render(request, 'customers/pickup_day.html')
