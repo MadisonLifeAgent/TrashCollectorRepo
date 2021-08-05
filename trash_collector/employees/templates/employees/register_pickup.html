@@ -5,15 +5,15 @@
 {% block content %}
   {% if user.is_authenticated %}
     
-    <h4 class="container-fluid">Eligible Customers: </h4>
+    <h3 class="row col-sm-6 mb-2 ms-2 bg-warning p-2 rounded">Eligible Customers: </h4>
 
-    <form action="{% url 'employees:register_pickup' %}" method="post" class="container">
+    <form action="{% url 'employees:register_pickup' %}" method="post" class="m-2 rounded col-sm-6">
         {% csrf_token %}
-        <div class="list-group">
+        <div class="list-group list-group-flush mb-2 rounded  border border-light fw-bold text-dark">
             {% for customer in eligible_customers %}
-            <label class="list-group-item">
-                <input class="form-check-input me-1" type="checkbox" value="{{customer.pk}}" name="customer_checks">
-                {{customer.name}} {{customer.address}}
+            <label class="list-group-item bg-info">
+                <input class="form-check-input" type="checkbox" value="{{customer.pk}}" name="customer_checks">
+                {{customer.name}}, {{customer.address}}
             </label>
             {% endfor %}
         </div>
