@@ -124,8 +124,8 @@ def customers_by_day(request):
     
     if request.method == "POST":
         filter_date = request.POST.get("filter_date")
-    else:
-        filter_date = "Monday"
+        if not filter_date:
+            filter_date = "Monday"
 
     matched_customers = get_customers_by_pickup_day(current_employee, filter_date)
 
