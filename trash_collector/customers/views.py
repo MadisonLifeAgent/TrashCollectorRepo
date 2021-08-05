@@ -66,7 +66,7 @@ def suspension(request):
             logged_in_customer.suspend_start=suspend_start
             logged_in_customer.suspend_end=suspend_end
             logged_in_customer.save()
-            return index(request)
+            return my_account(request)
         else:
             return render(request, 'customers/suspension.html')
     else:
@@ -86,13 +86,12 @@ def pickup_day(request):
     if request.method == "POST":
         pickup_day = request.POST.get("pickup_day")
 
-        if pickup_day:#saves new user pickup day to database
+        if pickup_day:
+            #saves new user pickup day to database
             logged_in_customer.pickup_day=pickup_day
             logged_in_customer.save()
 
-            return index(request)
-        else:
-            return index(request)
+        return my_account(request)
 
     else:
         return render(request, 'customers/pickup_day.html')
@@ -135,7 +134,7 @@ def special_pickup_date(request):
             new_special_pickup = Special_pickups(special_pickup_date=special_pickup_date, customer=customer)
             new_special_pickup.save()
 
-        return index(request)
+        return my_account(request)
 
     else:
         return render(request, 'customers/specialpickupdate.html')
