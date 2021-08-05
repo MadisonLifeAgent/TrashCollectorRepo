@@ -33,7 +33,7 @@
             <h3 class="mt-2 p-2 bg-success rounded">Search Results for {{selected_day}}: </h3>
             <ul class="list-group list-group-flush">
                 {% for customer in matched_customers %}
-                <li class="list-group-item"><h2> {{customer.name}}  {{customer.address}} </h2></li>
+                <a href="{% url 'employees:customer_detail' customer.id %}"><li class="list-group-item"><h2> {{customer.name}}  {{customer.address}} </h2></li></a>
                 {% endfor %}
             </ul>
           </div>

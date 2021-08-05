@@ -28,11 +28,19 @@ def index(request):
         return create(request)
 
     todays_customers = get_todays_customers(current_employee)
+    
+    markers = ""
+    for customer in todays_customers:
+        current_marker = get_customer_api_address(customer)
+        markers = markers + "|" + current_marker
+
+    api_url = "https://maps.googleapis.com/maps/api/staticmap?size=600x600&key=AIzaSyAIYNgoTrCaLJinMQtlC0GtUv8T62RU7Ag&markers=" + markers
 
     context = {
         'user': current_user,
         'todays_customers': todays_customers,
-        'current_employee': current_employee
+        'current_employee': current_employee,
+        "api_url": api_url
     }
 
     return render(request, 'employees/index.html', context)
@@ -121,18 +129,26 @@ def customers_by_day(request):
     current_user = request.user
     current_employee = Employee.objects.get(user_id=current_user.pk)
     matched_customers = Customer.objects.filter(zipcode=current_employee.zipcode)
-    
+    filter_date = None
     if request.method == "POST":
         filter_date = request.POST.get("filter_date")
-        if not filter_date:
-            filter_date = "Monday"
+        
+    if not filter_date:
+        filter_date = "Monday"
 
     matched_customers = get_customers_by_pickup_day(current_employee, filter_date)
+    markers = ""
+    for customer in matched_customers:
+        current_marker = get_customer_api_address(customer)
+        markers = markers + "|" + current_marker
+
+    api_url = "https://maps.googleapis.com/maps/api/staticmap?size=600x600&key=AIzaSyAIYNgoTrCaLJinMQtlC0GtUv8T62RU7Ag&markers=" + markers
 
     context = {
         "user": current_user,
         "matched_customers": matched_customers,
-        "selected_day": filter_date
+        "selected_day": filter_date,
+        "api_url": api_url
     }
 
     return render(request, 'employees/customers_by_day.html', context)
@@ -142,7 +158,7 @@ def customer_detail(request, customer_id):
     customer = Customer.objects.get(id=customer_id)
     customer_api_address = get_customer_api_address(customer)
 
-    api_url = f'https://www.google.com/maps/embed/v1/place?key=AIzaSyAIYNgoTrCaLJinMQtlC0GtUv8T62RU7Ag&q={customer_api_address}'
+    api_url = f'https://www.google.com/maps/embed/v1/place?key=AIzaSyAIYNgoTrCaLJinMQtlC0GtUv8T62RU7Ag&q={customer_api_address}||q=531+Bickley+Cir+80911'
 
     additional_pickups = Special_pickups.objects.filter(customer_id=customer)
 
@@ -168,6 +184,7 @@ def get_customer_api_address(customer):
     api_address = formatted_address_no_zip + '+' + customer_raw_zipcode
 
     return api_address
+
 
 
 
