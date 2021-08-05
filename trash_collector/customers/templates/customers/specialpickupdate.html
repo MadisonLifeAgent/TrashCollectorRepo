@@ -11,15 +11,15 @@
   <!-- Customer selects a special pick up date here -->
     <form action="{% url 'customers:special_pickup_date' %}" method="post" class="container">
         {% csrf_token %}
-        <div class="row col-6">
+        <div class="row col-sm-6">
           <div class="input-group">
-            <span class="input-group-text mb-2 col-3">Select Date:</span>
-            <input type="date" name="special_pickup_date" id="special_pickup_date" class="form-control mb-2 col-6">
+            <span class="input-group-text text-light fw-bold mb-2 col-sm-3 bg-danger">Select Date:</span>
+            <input type="date" name="special_pickup_date" id="special_pickup_date" class="form-control mb-2 col-sm-6">
           </div>
         </div>
 
-        <button type="submit" class="btn btn-primary">Submit changes</button>
-        <a href="{% url 'customers:my_account' %}"  class="btn btn-primary">Back</a>
+        <button type="submit" class="btn btn-primary mt-2 text-uppercase">Submit changes</button>
+        <a href="{% url 'customers:my_account' %}"  class="btn btn-primary mt-2 text-uppercase">Back</a>
     </form>
   
   {% endif %}

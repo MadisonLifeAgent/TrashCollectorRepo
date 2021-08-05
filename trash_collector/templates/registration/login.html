@@ -1,17 +1,18 @@
 {% extends 'base.html' %}
 
-{% block title %} Login Page {% endblock %}
+{% block title %} MWMW.com Login Page {% endblock %}
 
-{% block header %} Enter Your Login Credentials {% endblock %}
+{% block header %} Midwest Waste Management {% endblock %}
 
 
   {% block content %}
 
   <div class="container-fluid m-3">
+    <p class="fw-bold">Please enter your login credentials.</p>
     <form method="post">
       {% csrf_token %}
       {{ form.as_p }}
-      <button class="btn btn-primary" type="submit">Log In</button>
+      <button class="btn btn-primary text-uppercase" type="submit">Log In</button>
     </form>
   </div>
 {% endblock %}

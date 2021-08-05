@@ -18,57 +18,58 @@
     {% if group.name == "Customers" %}
     <!--  <p>Customer Account</p>   -->
         <!--- Customer Navigation Bar -->
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-          <div class="container-fluid m-3">
+        <nav class="navbar navbar-expand-lg navbar-light bg-success">
+          <div class="container-fluid m-1">
             <ul class="nav navbar-nav">
               <li class="nav-item p-2 text-uppercase">
-                <a class="text-decoration-none" href="{% url 'customers:index' %}">Home</a>
+                <a class="text-decoration-none text-white" href="{% url 'customers:index' %}">Home</a>
               </li>
               <li class="nav-item p-2 text-uppercase">
-                <a class="text-decoration-none" href="{% url 'customers:my_account' %}">My Account</a>
+                <a class="text-decoration-none text-white" href="{% url 'customers:my_account' %}">My Account</a>
               </li>
               <li class="nav-item p-2 text-uppercase">
-                <a class="text-decoration-none" href="{% url 'customers:pickup_day' %}">Change Pick Up Day</a>
+                <a class="text-decoration-none text-white" href="{% url 'customers:pickup_day' %}">Change Pick Up Day</a>
               </li>
               <li class="nav-item p-2 text-uppercase">
-                <a class="text-decoration-none" href="{% url 'customers:suspension' %}">Suspend Pickups</a>
+                <a class="text-decoration-none text-white" href="{% url 'customers:suspension' %}">Suspend Pickups</a>
               </li>
+              <li class="nav-item p-2 text-uppercase">
+                <a class="text-decoration-none text-white" href="{% url 'logout' %}">Log Out</a></li>
             </ul>
           </div>
         </nav>
-
-        <div class="container-sm position-relative">
-          <p><a class="btn btn-primary m-5 position-absolute bottom-0 end-0 text-uppercase" href="{% url 'logout' %}">Log Out</a></p>
-        </div>
     
     <!-- If an employee go here -->
     {% elif group.name == "Employees" %}
-    <nav class="navbar navbar-expand-lg navbar-lilght bg-light">
-      <div class="container-fluid m-3">
+    <nav class="navbar navbar-expand-lg navbar-light bg-success">
+      <div class="container-fluid m-1">
         <ul class="nav navbar-nav">
           <li class="nav-item p-2 text-uppercase">
-            <a class="text-decoration-none" href="{% url 'employees:index' %}">Employee Home</a>
+            <a class="text-decoration-none text-white" href="{% url 'employees:index' %}">Employee Home</a>
           </li>
           <li class="nav-item p-2 text-uppercase">
-            <a class="text-decoration-none" href="{% url 'employees:register_pickup' %}">Register New Pickups</a>
+            <a class="text-decoration-none text-white" href="{% url 'employees:register_pickup' %}">Register New Pickups</a>
           </li>
           <li class="nav-item p-2 text-uppercase">
-            <a class="text-decoration-none" href="{% url 'employees:customers_by_day' %}">Filter</a>
+            <a class="text-decoration-none text-white" href="{% url 'employees:search_completed_pickups' %}">Completed Pickups</a>
+          </li>
+          <li class="nav-item p-2 text-uppercase">
+            <a class="text-decoration-none text-white" href="{% url 'employees:customers_by_day' %}">Filter</a>
+          </li>
+          <li class="nav-item p-2 text-uppercase">
+            <a class="text-decoration-none text-white" href="{% url 'logout' %}">Log Out</a>
           </li>
         </ul>
       </div>
     </nav>
 
-    <div class="container-sm position-relative">
-      <p><a class="btn btn-primary m-5 position-absolute bottom-0 end-0 text-uppercase" href="{% url 'logout' %}">Log Out</a></p>
-    </div>
     {% endif %}
   {% endfor %}
 {% endif %}
   <main>
-    <div class="container-fluid m-2">
+    <div class="container-fluid">
       <div class="row">
-        <h1>{% block header %} {% endblock %}</h1>
+        <h1 class="bg-primary mt-2 p-3 text-white col-sm">{% block header %} {% endblock %}</h1>
       </div>
 
       <div class="container-fluid">

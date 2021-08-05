@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
 {# This top line allows this template to utilizing the styling and layout from the base. All your templates should do the same. #}
 
-{% block title %} Edit your Pickup Day {% endblock %}
+{% block title %} Change Pickup Day {% endblock %}
 
-{% block header %} Edit your Pickup Day {% endblock %}
+{% block header %} Select a New Pickup Day {% endblock %}
 
 {% block content %}
   <!-- Go here if customer logged in -->
@@ -12,24 +12,30 @@
     <!-- form to change Pickup Day -->
     <form action="{% url 'customers:pickup_day' %}" method="post" class="container">
         {% csrf_token %}
-       
-          <label for="pickup_day" class="form-label">Enter a new Pickup Day:</label>
+        <div class="container-fluid m-2">
+          <div class="row col-sm-8">
+            <div class="input-group">
+
+          <label for="pickup_day" class="form-label form-control input-group-text text-light fw-bold mb-2 col-sm-4 bg-danger">Pickup Day:</label>
           {% csrf_token %}
-          <div class="dropdown">
-            <select name="pickup_day">
-              <option class="dropdown-item" value="none" selected disabled hidden> Select A Day </option>
-              <option class="dropdown-item" value="Monday"> "Monday"</option>
-              <option class="dropdown-item" value="Tuesday"> "Tuesday"</option>
-              <option class="dropdown-item" value="Wednesday"> "Wednesday"</option>
-              <option class="dropdown-item" value="Thursday"> "Thursday"</option>
-              <option class="dropdown-item" value="Friday"> "Friday"</option>
-              <option class="dropdown-item" value="Saturday"> "Saturday"</option>
-              <option class="dropdown-item" value="Sunday"> "Sunday"</option>
-            </select>
+              <div class="dropdown form-control mb-2 col-sm-4">
+                <select name="pickup_day">
+                  <option class="dropdown-item" value="none" selected disabled hidden> Select A Day </option>
+                  <option class="dropdown-item" value="Monday"> "Monday"</option>
+                  <option class="dropdown-item" value="Tuesday"> "Tuesday"</option>
+                  <option class="dropdown-item" value="Wednesday"> "Wednesday"</option>
+                  <option class="dropdown-item" value="Thursday"> "Thursday"</option>
+                  <option class="dropdown-item" value="Friday"> "Friday"</option>
+                  <option class="dropdown-item" value="Saturday"> "Saturday"</option>
+                  <option class="dropdown-item" value="Sunday"> "Sunday"</option>
+                </select>
+              </div>
+            </div>
           </div>
+        </div>
             
-          <button type="submit" class="btn btn-success">Submit</button>
-          <a href="{% url 'customers:index' %}"  class="btn btn-danger">Back</a>
+          <button type="submit" class="btn btn-primary ms-3 text-uppercase">Submit</button>
+          <a href="{% url 'customers:my_account' %}"  class="btn btn-primary text-uppercase">Back</a>
     </form>
               
         <!-- submit change -->

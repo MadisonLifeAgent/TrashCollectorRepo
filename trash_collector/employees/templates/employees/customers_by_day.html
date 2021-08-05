@@ -1,34 +1,45 @@
 {% extends 'base.html' %}
 
-{% block title %}{% block header %} Employee Home {% endblock %}{% endblock %}
+{% block title %} Search by Day {% endblock %}
+
+{% block header %} Search by Day {% endblock %}
 
 {% block content %}
   {% if user.is_authenticated %}
-    Hello Employee {{ user.username }}!
 
-    <form action="{% url 'employees:customers_by_day' %}" method="post" class="container">
+    <form action="{% url 'employees:customers_by_day' %}" method="post" class="container mt-3">
         {% csrf_token %}
-        <div class="dropdown">
-            <select name="filter_date">
-              <option class="dropdown-item" value="none" selected disabled hidden> Select A Day </option>
-              <option class="dropdown-item" value="Monday"> "Monday"</option>
-              <option class="dropdown-item" value="Tuesday"> "Tuesday"</option>
-              <option class="dropdown-item" value="Wednesday"> "Wednesday"</option>
-              <option class="dropdown-item" value="Thursday"> "Thursday"</option>
-              <option class="dropdown-item" value="Friday"> "Friday"</option>
-              <option class="dropdown-item" value="Saturday"> "Saturday"</option>
-              <option class="dropdown-item" value="Sunday"> "Sunday"</option>
-            </select>
+        <div class="container-fluid">
+          <div class="row col-sm-9">
+            <div class="input-group">
+              <label for="customers_by_day" class="form-label form-control input-group-text text-light fw-bold col-sm-2 bg-primary">Pickup Day:</label>
+              
+              <div class="dropdown form-control mb-2 col-sm-3">
+                  <select name="filter_date">
+                    <option class="dropdown-item" value="none" selected disabled hidden> Select A Day </option>
+                    <option class="dropdown-item" value="Monday"> "Monday"</option>
+                    <option class="dropdown-item" value="Tuesday"> "Tuesday"</option>
+                    <option class="dropdown-item" value="Wednesday"> "Wednesday"</option>
+                    <option class="dropdown-item" value="Thursday"> "Thursday"</option>
+                    <option class="dropdown-item" value="Friday"> "Friday"</option>
+                    <option class="dropdown-item" value="Saturday"> "Saturday"</option>
+                    <option class="dropdown-item" value="Sunday"> "Sunday"</option>
+                  </select>
+              </div>
+              <button type="submit" class="btn btn-primary input-group-text text-light fw-bold mb-2 col-sm-3 bg-success rounded">Search</button>
+            </div>
+          </div>
+          <div class="container-fluid row col-sm-9">
+            <h3 class="mt-2 p-2 bg-success rounded">Search Results for {{selected_day}}: </h3>
+            <ul class="list-group list-group-flush">
+                {% for customer in matched_customers %}
+                <li class="list-group-item"><h2> {{customer.name}}  {{customer.address}} </h2></li>
+                {% endfor %}
+            </ul>
+          </div>
         </div>
-        <button type="submit" class="btn btn-primary">Search This Day</button>
     </form>
 
-    <h1 class="container-fluid">Search Results for {{selected_day}}: </h1>
-    <ul class="list-group list-group-flush">
-        {% for customer in matched_customers %}
-        <li class="list-group-item"><h2> {{customer.name}}  {{customer.address}} </h2></li>
-        {% endfor %}
-    </ul>
    
   {% else %}
     <p>You are at the employee index, but you are not logged in.</p>

@@ -3,88 +3,61 @@
 
 {% block title %} Customer Account Page {% endblock %}
 
-{% block header %} {{ user.username }}'s Account Details'  {% endblock %}
+{% block header %} {{ logged_in_customer.name }}'s Account Details  {% endblock %}
 
 {% block content %}
   <!-- Go here if customer logged in -->
   {% if user.is_authenticated %}
   <div class="container-fluid m-3">
 
-    <h3 class="mb-5">Your Current Balance is:  ${{ logged_in_customer.balance }}</h3>
+    <h3 class="container-fluid row ms-1 mb-5 p-3 rounded bg-warning col-sm-7">Your Current Balance is:  ${{ logged_in_customer.balance }}</h3>
 
-    <div class="container">
+    <div class="container-fluid">
         <dl>
-          <div class="row">
-            <div class="col-sm-4">
-              <dt>Name:</dt>
-            </div>
-            <div class="col-sm-4">
-              <dd>{{ logged_in_customer.name}}</dd><br>
-            </div>
+          <div class="row mb-2">
+              <dt class="col-sm-3 m-1 bg-success rounded border-end border-light text-white text-center p-1">Name:</dt>
+                <dd class="col-sm-4 m-1 bg-primary rounded text-white fw-bold text-center p-1">{{ logged_in_customer.name}}</dd><br>
           </div>
 
-          <div class="row">
-            <div class="col-sm-4">
-              <dt>Street Address:</dt>
-            </div>
-            <div class="col-sm-4">
-              <dd>{{ logged_in_customer.address }}</dd><br>
-            </div>
+          <div class="row mb-2">
+              <dt class="col-sm-3 m-1 bg-success rounded border-end border-light text-white text-center p-1">Street Address:</dt>
+                <dd class="col-sm-4 m-1 bg-primary rounded text-white fw-bold text-center p-1">{{ logged_in_customer.address }}</dd><br>
           </div>
 
-          <div class="row">
-            <div class="col-sm-4">
-              <dt>Zip Code:</dt>
-            </div>
-            <div class="col-sm-4">
-              <dd>{{ logged_in_customer.zipcode }}</dd><br>
-            </div>
+          <div class="row mb-2">
+              <dt class="col-sm-3 m-1 bg-success rounded border-end border-light text-white text-center p-1">Zip Code:</dt>
+                <dd class="col-sm-4 m-1 bg-primary rounded text-white fw-bold text-center p-1">{{ logged_in_customer.zipcode }}</dd><br>
           </div>
 
-          <div class="row">
-            <div class="col-sm-4">
-              <dt>Your weekly Pick Up Day is:</dt>
-            </div>
-            <div class="col-sm-4">
-              <dd>{{ logged_in_customer.pickup_day }}</dd><br>
-            </div>
+          <div class="row mb-2">
+              <dt class="col-sm-3 m-1 bg-success rounded border-end border-light text-white text-center p-1">Your weekly Pick Up Day is:</dt>
+                <dd class="col-sm-4 m-1 bg-primary rounded text-white fw-bold text-center p-1">{{ logged_in_customer.pickup_day }}</dd><br>
           </div>
 
-          <div class="row">
-            <div class="col-sm-4">
-              <dt>Pickup Suspension Period:</dt>
-            </div>
-            <div class="col-sm-4">
-              <dd>{{ logged_in_customer.suspend_start }} to {{ logged_in_customer.suspend_end }}</dd><br>
-            </div>
+          <div class="row mb-2">
+              <dt class="col-sm-3 m-1 bg-success rounded border-end border-light text-white text-center p-1">Pickup Suspension Period:</dt>
+                <dd class="col-sm-4 m-1 bg-primary rounded text-white fw-bold text-center p-1">{{ logged_in_customer.suspend_start }} to {{ logged_in_customer.suspend_end }}</dd><br>
           </div>
 
 
-            <dl>
-              <div class="row">
-                <div class="col-sm-4">
-                  <dt>Special Pickup Date(s):</dt>
-                </div>
-                <div class="col-sm-4">
-                  <!-- This for loop queries the special pickup dates db -->
-                  {% for special_date in all_special_dates %}
-                  <dd>
-                    {% if special_date.customer == logged_in_customer %}
-                      {{ special_date.special_pickup_date }} 
-                    {% endif %}
-                  </dd>
-                  {% endfor %}
-              <br>
-                </div>
-              </div>
-            </dl>
-          <div class="row">
-            <div class="col-sm-4">
-              <dt>(Click to add a special pickup date)</dt>
+        <dl>
+          <div class="row mb-2">
+              <dt class="col-sm-3 m-1 bg-success rounded border-end border-light text-white text-center p-1">Special Pickup Date(s):</dt>
+            <div class="col-sm-4 m-1 bg-primary rounded">
+              <!-- This for loop queries the special pickup dates db -->
+              {% for special_date in all_special_dates %}
+              <dd class="text-white fw-bold text-center p-1">
+                {% if special_date.customer == logged_in_customer %}
+                  {{ special_date.special_pickup_date }} 
+                {% endif %}
+              </dd>
+              {% endfor %}
+          <br>
             </div>
-            <div class="col-sm-4">
-              <dd><a href="{% url 'customers:special_pickup_date' %}"  class="btn btn-success text-uppercase">Add Special Pickup</a></dd><br>
-            </div>
+          </div>
+        </dl>
+          <div class="row mb-2">
+              <dt class="col-sm-4"><a href="{% url 'customers:special_pickup_date' %}"  class="btn btn-danger text-uppercase">Add Special Pickup</a></dt>
           </div>
         </dl>
 
