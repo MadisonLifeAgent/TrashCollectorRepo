@@ -130,9 +130,10 @@ def special_pickup_date(request):
         special_pickup_date = request.POST.get("special_pickup_date")
         customer = logged_in_customer
 
-        #saves new user pickup day to database
-        new_special_pickup = Special_pickups(special_pickup_date=special_pickup_date, customer=customer)
-        new_special_pickup.save()
+        if special_pickup_date:
+            #saves new user pickup day to database
+            new_special_pickup = Special_pickups(special_pickup_date=special_pickup_date, customer=customer)
+            new_special_pickup.save()
 
         return index(request)
 
