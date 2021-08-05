@@ -20,7 +20,8 @@
         <!--- Customer Navigation Bar -->
         <nav class="navbar navbar-expand-lg navbar-light bg-success">
           <div class="container-fluid m-1">
-            <ul class="nav navbar-nav">
+            <div class="row col-sm-12">
+            <ul class="nav navbar-nav col-sm-8">
               <li class="nav-item p-2 text-uppercase">
                 <a class="text-decoration-none text-white" href="{% url 'customers:index' %}">Home</a>
               </li>
@@ -28,14 +29,20 @@
                 <a class="text-decoration-none text-white" href="{% url 'customers:my_account' %}">My Account</a>
               </li>
               <li class="nav-item p-2 text-uppercase">
-                <a class="text-decoration-none text-white" href="{% url 'customers:pickup_day' %}">Change Pick Up Day</a>
+                <a class="text-decoration-none text-white" href="{% url 'customers:pickup_day' %}">Change Pickup Day</a>
               </li>
               <li class="nav-item p-2 text-uppercase">
                 <a class="text-decoration-none text-white" href="{% url 'customers:suspension' %}">Suspend Pickups</a>
               </li>
               <li class="nav-item p-2 text-uppercase">
-                <a class="text-decoration-none text-white" href="{% url 'logout' %}">Log Out</a></li>
+                <a class="text-decoration-none text-white" href="{% url 'customers:special_pickup_date' %}">Add Pickup</a>
+              </li>
+              <li class="nav-item p-2 text-uppercase position-absolute end-0 me-1">
+                <a class="text-decoration-none text-white" href="{% url 'logout' %}">Log Out</a>
+              </li>
             </ul>
+        
+            </div>
           </div>
         </nav>
     
@@ -43,7 +50,8 @@
     {% elif group.name == "Employees" %}
     <nav class="navbar navbar-expand-lg navbar-light bg-success">
       <div class="container-fluid m-1">
-        <ul class="nav navbar-nav">
+        <div class="row col-sm-12">
+        <ul class="nav navbar-nav col-sm-8">
           <li class="nav-item p-2 text-uppercase">
             <a class="text-decoration-none text-white" href="{% url 'employees:index' %}">Employee Home</a>
           </li>
@@ -56,10 +64,11 @@
           <li class="nav-item p-2 text-uppercase">
             <a class="text-decoration-none text-white" href="{% url 'employees:customers_by_day' %}">Filter</a>
           </li>
-          <li class="nav-item p-2 text-uppercase">
+          <li class="nav-item p-2 text-uppercase position-absolute end-0 me-1">
             <a class="text-decoration-none text-white" href="{% url 'logout' %}">Log Out</a>
           </li>
         </ul>
+        </div>
       </div>
     </nav>
 
