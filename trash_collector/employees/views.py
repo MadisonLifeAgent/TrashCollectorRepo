@@ -96,7 +96,10 @@ def search_completed_pickups(request):
     if request.method == "POST":
         filter_date = request.POST.get("filter_date")
         filter_customer_id = request.POST.get("filter_customer")
-        filter_customer = Customer.objects.get(id=filter_customer_id)
+        if filter_customer_id:
+            filter_customer = Customer.objects.get(id=filter_customer_id)
+        else:
+            filter_customer = None
     else:
         filter_date = None
         filter_customer = None
