@@ -19,7 +19,7 @@
         <button type="submit" class="btn btn-primary">Search</button>
     </form>
 
-    <h1 class="container-fluid">Search Results: </h1>
+    <h1 class="container-fluid">{{search_results_string}}: </h1>
     <ul class="list-group list-group-flush">
         {% for pickup in search_results %}
         <li class="list-group-item"><h2> {{pickup.customer_id}}  {{pickup.date}} </h2></li>

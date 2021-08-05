@@ -107,9 +107,10 @@ def search_completed_pickups(request):
         
     filtered_results = pickup_search_results(current_employee, filter_date, filter_customer)
     context = {
-        "search_results": filtered_results,
+        "search_results": filtered_results[0],
         "user": current_user,
-        "matched_customers": matched_customers
+        "matched_customers": matched_customers,
+        "search_results_string": filtered_results[1],
     }
     return render(request, 'employees/search_completed_pickups.html', context)
 
@@ -140,13 +141,18 @@ def get_customers_by_pickup_day(employee, weekday):
 
 def pickup_search_results(employee, date, customer):
     if date and customer:
-        return CompletedPickup.objects.filter(employee_id=employee.pk).filter(date=date).filter(customer_id=customer.pk).order_by('date')
+        filtered_pickups = CompletedPickup.objects.filter(employee_id=employee.pk).filter(date=date).filter(customer_id=customer.pk).order_by('date')
+        filtered_pickup_string = f'Search results for {customer.name} on {date}'
     elif date:
-        return CompletedPickup.objects.filter(employee_id=employee.pk).filter(date=date).order_by('date')
+        filtered_pickups = CompletedPickup.objects.filter(employee_id=employee.pk).filter(date=date).order_by('date')
+        filtered_pickup_string = f'Search results for {date}'
     elif customer:
-        return CompletedPickup.objects.filter(employee_id=employee.pk).filter(customer_id=customer.pk).order_by('customer_id')
+        filtered_pickups = CompletedPickup.objects.filter(employee_id=employee.pk).filter(customer_id=customer.pk).order_by('customer_id')
+        filtered_pickup_string = f'Search results for {customer.name}'
     else:
-        return CompletedPickup.objects.filter(employee_id=employee.pk)
+        filtered_pickups = CompletedPickup.objects.filter(employee_id=employee.pk)
+        filtered_pickup_string = 'All pickups'
+    return (filtered_pickups, filtered_pickup_string)
 
 
 def charge_customer(customer):
