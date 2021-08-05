@@ -29,7 +29,8 @@ def index(request):
 
     context = {
         'user': current_user,
-        'todays_customers': todays_customers
+        'todays_customers': todays_customers,
+        'current_employee': current_employee
     }
 
     return render(request, 'employees/index.html', context)
