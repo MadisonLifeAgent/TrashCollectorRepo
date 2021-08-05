@@ -179,8 +179,10 @@ def get_todays_customers(current_employee):
     todays_special_pickups = Special_pickups.objects.filter(special_pickup_date = today)
     special_pickup_customers = []
     for pickup in todays_special_pickups:
-        pickup_customer = Customer.objects.filter(id = pickup.customer_id).filter(zipcode = current_employee.zipcode)
-        special_pickup_customers.append(pickup_customer)
+        pickup_customer = Customer.objects.filter(id = pickup.customer_id)
+        # Need to get the query evaluated before performing an action
+        for customer in pickup_customer:
+            special_pickup_customers.append(customer)
     active_special_pickup_customers = get_only_active_customers(special_pickup_customers, today)
 
     # Merge the lists to make sure only unique customers are included
