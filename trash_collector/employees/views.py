@@ -252,7 +252,8 @@ def get_todays_customers(current_employee):
         pickup_customer = Customer.objects.filter(id = pickup.customer_id)
         # Need to get the query evaluated before performing an action
         for customer in pickup_customer:
-            special_pickup_customers.append(customer)
+            if customer.zipcode == current_employee.zipcode:
+                special_pickup_customers.append(customer)
     active_special_pickup_customers = get_only_active_customers(special_pickup_customers, today)
 
     # Merge the lists to make sure only unique customers are included
