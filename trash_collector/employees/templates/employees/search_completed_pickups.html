@@ -25,14 +25,14 @@
 
     <div class="row">
         <ul>
-          <li class="list-group-item col-sm-3 m-1 bg-primary rounded border-end border-light text-white p-2">{{search_results_string}}: </li> 
+          <li class="list-group-item col-sm-3 m-1 bg-primary rounded border-end border-light text-light fw-bold ps-3 pt-2 pb-2">{{search_results_string}}: </li> 
         </ul>
     </div>
 
     <div class="row">
         <ul>
               {% for pickup in search_results %}
-              <li class="col-sm-3 m-1 bg-success rounded border-end border-light text-light fw-bold p-2">
+              <li class="col-sm-3 m-1 bg-success rounded border-end border-light text-light fw-bold ps-3 pt-2 pb-2">
                   {{pickup.customer.name}}<br>
                   {{pickup.customer.address}}<br>
                   {{pickup.date}}</li>  

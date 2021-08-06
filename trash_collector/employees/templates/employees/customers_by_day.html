@@ -9,12 +9,11 @@
 
     <form action="{% url 'employees:customers_by_day' %}" method="post" class="container mt-3">
         {% csrf_token %}
-        <div class="container-fluid">
-          <div class="row col-sm-9">
+          <div class="row col-sm-7">
             <div class="input-group">
               <label for="customers_by_day" class="form-label form-control input-group-text text-light fw-bold col-sm-2 bg-primary">Pickup Day:</label>
               
-              <div class="dropdown form-control mb-2 col-sm-3">
+              <div class="dropdown form-control mb-2 col-sm-2">
                   <select name="filter_date">
                     <option class="dropdown-item" value="none" selected disabled hidden> Select A Day </option>
                     <option class="dropdown-item" value="Monday"> "Monday"</option>
@@ -26,23 +25,29 @@
                     <option class="dropdown-item" value="Sunday"> "Sunday"</option>
                   </select>
               </div>
-              <button type="submit" class="btn btn-primary input-group-text text-light fw-bold mb-2 col-sm-3 bg-success rounded">Search</button>
+                <button type="submit" class="btn btn-primary input-group-text text-light fw-bold mb-2 col-sm-3 bg-success rounded">Search</button>
             </div>
           </div>
-          <div class="container-fluid row col-sm-12">
-            <div class="container col-sm-12 col-md-7">
-              <h3 class="mt-2 p-2 bg-success rounded">Search Results for {{selected_day}}: </h3>
-              <ul class="list-group list-group-flush">
+
+          <div class="row m-2">
+            <div class="container-fluid">
+            <h3 class="row col-sm-6 mb-2 bg-warning p-2 rounded">Search Results for {{selected_day}}: </h3>
+              <ul class="list-group list-group-flush rounded">
                   {% for customer in matched_customers %}
-                  <a href="{% url 'employees:customer_detail' customer.id %}"><li class="list-group-item"><h2> {{customer.name}}  {{customer.address}} </h2></li></a>
+                  <a href="{% url 'employees:customer_detail' customer.id %}"><li class="list-group-item row col-sm-6 bg-info border border-light fw-bold text-dark rounded">
+                    {{customer.name}}<br>
+                    {{customer.address}}</li></a>
                   {% endfor %}
               </ul>
             </div>
           </div>
-          <div class="col-sm-12 text-center m-2">
-            <img class="rounded img-fluid" alt="Map of Customers" title="customer_address_map" src="{{api_url}}" allowfullscreen></iframe>
+
+          <div class="row">
+            <div class="container-fluid">
+
+              <img class="row col-sm-6 ms-1 mt-3 rounded img-fluid mb-5" alt="Map of Customers" title="customer_address_map" src="{{api_url}}" allowfullscreen></iframe>
+            </div>
           </div>
-        </div>
     </form>
 
    
