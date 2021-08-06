@@ -1,12 +1,16 @@
+#############################
+###        IMPORTS        ###
+#############################
 from django.db import models
 from django.db.models.deletion import PROTECT
 from django.db.models.fields import CharField
-# Create your models here.
-
-# TODO: Finish customer model by adding necessary properties to fulfill user stories
 
 
+#############################
+###        MODELS         ###
+#############################
 class Customer(models.Model):
+    # Base customer class
     name = models.CharField(max_length=50)
     user = models.ForeignKey('accounts.User', blank=True, null=True, on_delete=models.CASCADE)
     zipcode = models.CharField(max_length=5, default='')
@@ -16,13 +20,15 @@ class Customer(models.Model):
     suspend_end = models.DateField(null=True, editable=True, blank=True)
     balance = models.IntegerField(default=0, blank=True)
 
-# completed pickups class
+
 class CompletedPickup(models.Model):
+    # Completed pickups class
     date = models.DateField(null=False, blank=False, editable=False)
     customer = models.ForeignKey('customers.Customer', blank=True, null=False, on_delete=PROTECT)
     employee = models.ForeignKey('employees.Employee', blank=True, null=False, on_delete=PROTECT)
 
-# special pick up date class
+
 class Special_pickups(models.Model):
+    # Special pick up date class
     special_pickup_date = models.DateField(null=False, blank=False, editable=False)
     customer = models.ForeignKey('customers.Customer', blank=True, null=False, on_delete=PROTECT)

@@ -1,15 +1,17 @@
+#############################
+###        IMPORTS        ###
+#############################
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 from django.shortcuts import render
 from .models import Customer, Special_pickups
 
-# Create your views here.
 
-# TODO: Create a function for each path created in customers/urls.py. Each will need a template as well.
-
-
+#############################
+###         VIEWS         ###
+#############################
 def index(request):
-    # The following line will get the logged-in in user (if there is one) within any view function
+    # Basic home page for customer
     user = request.user
     context = {
         'user': user
@@ -22,13 +24,11 @@ def index(request):
     except:
         return create(request)
 
-    # It will be necessary while creating a Customer/Employee to assign request.user as the user foreign key
-
-    print(user)
     return render(request, 'customers/index.html', context)
 
-# create a new customer
+
 def create(request):
+    # Create a new customer
     if request.method == "POST":
         name = request.POST.get("name")
         user = request.user
@@ -47,24 +47,28 @@ def create(request):
     else:
         return render(request, 'customers/create.html')
 
-# channge or pick suspension dates    
+
 def suspension(request):
+    # channge or pick suspension dates 
     user = request.user
     context = {
         'user': user
     }
     logged_in_customer = Customer.objects.get(user=user)
     context['logged_in_customer'] = logged_in_customer
+
     if request.method == "POST":
         suspend_start = request.POST.get("suspend_start")
         suspend_end = request.POST.get("suspend_end")
+        # Verify that suspension dates were actually provided
         if suspend_start and suspend_end:
+            # Check if suspension dates were given in reverse order
             if suspend_end < suspend_start:
                 temp = suspend_end
                 suspend_end = suspend_start
                 suspend_start = temp
-            
 
+            # Update suspension dates
             logged_in_customer.suspend_start=suspend_start
             logged_in_customer.suspend_end=suspend_end
             logged_in_customer.save()
@@ -74,8 +78,9 @@ def suspension(request):
     else:
         return render(request, 'customers/suspension.html')
 
-# change regular pickup day
+
 def pickup_day(request):
+    # Change regular pickup day
     user = request.user
     context = {
         'user': user
@@ -84,12 +89,12 @@ def pickup_day(request):
     logged_in_customer = Customer.objects.get(user=user)
     context['logged_in_customer'] = logged_in_customer
     
-    # get pickup day from form
+    # Get pickup day from form
     if request.method == "POST":
         pickup_day = request.POST.get("pickup_day")
 
         if pickup_day:
-            #saves new user pickup day to database
+            # Saves new user pickup day to database if one was selected
             logged_in_customer.pickup_day=pickup_day
             logged_in_customer.save()
 
@@ -100,7 +105,7 @@ def pickup_day(request):
 
 
 def my_account(request):
-    # The following line will get the logged-in in user (if there is one) within any view function
+    # View customer acount information
     user = request.user
     context = {
         'user': user
@@ -109,15 +114,15 @@ def my_account(request):
     logged_in_customer = Customer.objects.get(user=user)
     context['logged_in_customer'] = logged_in_customer
 
-    # query special_pickups db and store all values in dictionary for use on myaccount.html in order to list customer's special pickup dates
+    # Query special_pickups db and store all values in dictionary for use on myaccount.html in order to list customer's special pickup dates
     all_special_dates = get_all_special_pickup_dates(request)
     context['all_special_dates'] = all_special_dates
 
-
     return render(request, 'customers/my_account.html', context)
 
+
 def special_pickup_date(request):
-    # The following line will get the logged-in in user (if there is one) within any view function
+    # Adds a new additional pickup 
     user = request.user
     context = {
         'user': user
@@ -126,13 +131,14 @@ def special_pickup_date(request):
     logged_in_customer = Customer.objects.get(user=user)
     context['logged_in_customer'] = logged_in_customer
 
-    # get special pickup date from form
+    
     if request.method == "POST":
+        # Get special pickup date from form
         special_pickup_date = request.POST.get("special_pickup_date")
         customer = logged_in_customer
 
         if special_pickup_date:
-            #saves new user pickup day to database
+            # Saves new user pickup day to database if a date was selected
             new_special_pickup = Special_pickups(special_pickup_date=special_pickup_date, customer=customer)
             new_special_pickup.save()
 
@@ -142,8 +148,11 @@ def special_pickup_date(request):
         return render(request, 'customers/specialpickupdate.html')
 
 
-# gets all info from special pickupdates db
+#############################
+###        HELPERS        ###
+#############################
 def get_all_special_pickup_dates(request):
+    # Gets all info from special pickupdates db
     all_special_dates = Special_pickups.objects.all()
 
     return all_special_dates
