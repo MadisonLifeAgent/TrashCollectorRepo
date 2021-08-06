@@ -12,7 +12,6 @@
     <!-- form to change Pickup Day -->
     <form action="{% url 'customers:pickup_day' %}" method="post" class="container">
         {% csrf_token %}
-        <div class="container-fluid m-2">
           <div class="row col-sm-8">
             <div class="input-group">
 
@@ -32,9 +31,8 @@
               </div>
             </div>
           </div>
-        </div>
             
-          <button type="submit" class="btn btn-primary ms-3 text-uppercase">Submit</button>
+          <button type="submit" class="btn btn-primary text-uppercase">Submit</button>
           <a href="{% url 'customers:my_account' %}"  class="btn btn-primary text-uppercase">Back</a>
     </form>
               
