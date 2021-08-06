@@ -1,3 +1,6 @@
+#############################
+###        IMPORTS        ###
+#############################
 from django.http.response import HttpResponseRedirect
 from customers.models import Customer, CompletedPickup, Special_pickups
 from django.http import HttpResponse, HttpResponseRedirect
@@ -7,15 +10,12 @@ from django.apps import apps
 from .models import Employee
 import datetime
 
-# Create your views here.
 
-
-
-# TODO: Create a function for each path created in employees/urls.py. Each will need a template as well.
-
-
+#############################
+###         VIEWS         ###
+#############################
 def index(request):
-    # This line will get the Customer model from the other app, it can now be used to query the db for Customers
+    # Home page for employees
     Customer = apps.get_model('customers', 'Customer')
     Special_pickups = apps.get_model('customers', 'Special_pickups')
 
@@ -29,6 +29,7 @@ def index(request):
 
     todays_customers = get_todays_customers(current_employee)
     
+    # Generate a url for the maps API, one pin for each customer
     markers = ""
     for customer in todays_customers:
         current_marker = get_customer_api_address(customer)
@@ -36,6 +37,7 @@ def index(request):
 
     api_url = "https://maps.googleapis.com/maps/api/staticmap?size=600x600&key=AIzaSyAIYNgoTrCaLJinMQtlC0GtUv8T62RU7Ag&markers=" + markers[1:]
 
+    # Pass context to the HTML page
     context = {
         'user': current_user,
         'todays_customers': todays_customers,
@@ -47,6 +49,7 @@ def index(request):
 
 
 def create(request):
+    # Employee creation page
     if request.method == "POST":
         name = request.POST.get("name")
         user = request.user
@@ -62,7 +65,7 @@ def create(request):
 
 
 def register_pickup(request):
-    # This line will get the Customer model from the other app, it can now be used to query the db for Customers
+    # Page to select pickups to complete
     Customer = apps.get_model('customers', 'Customer')
     CompletedPickup = apps.get_model('customers', 'CompletedPickup')
 
@@ -70,6 +73,7 @@ def register_pickup(request):
     current_user = request.user
     current_employee = Employee.objects.get(user = current_user)
 
+    # Retrieve the customers with a pickup today that match zip code and aren't suspended
     customers = get_todays_customers(current_employee)
 
     if request.method == "POST":
@@ -82,11 +86,12 @@ def register_pickup(request):
             current_customer = Customer.objects.get(id=customer_id)
             current_pickup = CompletedPickup(date=today, customer=current_customer, employee=current_employee)
             current_pickup.save()
-            # Charges the customer 1 dollar for each pickup, generic value. Could swap for something better later on
+            # Charges the customer 5 dollars for each pickup, generic value. Could swap for something better later on
             charge_customer(current_customer)
 
         return HttpResponseRedirect(reverse("employees:index"))
     else:
+        # Get the customers that have a relevant pickup scheduled for today
         eligible_customers = get_eligible_pickup_customers(customers)
 
         context = {
@@ -96,16 +101,13 @@ def register_pickup(request):
         return render(request, 'employees/register_pickup.html', context)
 
 
-
 def search_completed_pickups(request):
+    # Search through completed pickups to verify they have been completed
     current_user = request.user
     current_employee = Employee.objects.get(user_id=current_user.pk)
     matched_customers = Customer.objects.filter(zipcode=current_employee.zipcode)
 
-    # Search for completed pickup:
-    # - Filters:
-    # - - Date
-    # - - Customer
+    # Handle different search queries from page
     if request.method == "POST":
         filter_date = request.POST.get("filter_date")
         filter_customer_id = request.POST.get("filter_customer")
@@ -117,6 +119,7 @@ def search_completed_pickups(request):
         filter_date = None
         filter_customer = None
         
+    # Generate search results and pass back to page
     filtered_results = pickup_search_results(current_employee, filter_date, filter_customer)
     context = {
         "search_results": filtered_results[0],
@@ -128,9 +131,12 @@ def search_completed_pickups(request):
 
 
 def customers_by_day(request):
+    # View customers that have a regular pickup scheduled for the provided day of the week
     current_user = request.user
     current_employee = Employee.objects.get(user_id=current_user.pk)
     matched_customers = Customer.objects.filter(zipcode=current_employee.zipcode)
+
+    # Get the filter date from the page. If there isn't one, default to Monday
     filter_date = None
     if request.method == "POST":
         filter_date = request.POST.get("filter_date")
@@ -138,6 +144,7 @@ def customers_by_day(request):
     if not filter_date:
         filter_date = "Monday"
 
+    # Generate URL for google API
     matched_customers = get_customers_by_pickup_day(current_employee, filter_date)
     markers = ""
     for customer in matched_customers:
@@ -146,6 +153,7 @@ def customers_by_day(request):
 
     api_url = "https://maps.googleapis.com/maps/api/staticmap?size=600x600&key=AIzaSyAIYNgoTrCaLJinMQtlC0GtUv8T62RU7Ag&markers=" + markers[1:]
 
+    # Pass context to page
     context = {
         "user": current_user,
         "matched_customers": matched_customers,
@@ -157,13 +165,16 @@ def customers_by_day(request):
 
 
 def customer_detail(request, customer_id):
+    # View customer account information
     customer = Customer.objects.get(id=customer_id)
-    customer_api_address = get_customer_api_address(customer)
 
+    # Generate API url to display customer address on map
+    customer_api_address = get_customer_api_address(customer)
     api_url = f'https://www.google.com/maps/embed/v1/place?key=AIzaSyAIYNgoTrCaLJinMQtlC0GtUv8T62RU7Ag&q={customer_api_address}'
 
     additional_pickups = Special_pickups.objects.filter(customer_id=customer)
 
+    # Pass context to page
     context = {
         "customer": customer,
         "api_url": api_url,
@@ -172,15 +183,21 @@ def customer_detail(request, customer_id):
 
     return render(request, f'employees/customer_detail.html', context)
 
-def get_customer_api_address(customer):
-    #####################################################
-    #### API KEY: AIzaSyAIYNgoTrCaLJinMQtlC0GtUv8T62RU7Ag
-    #### API url format: https://www.google.com/maps/embed/v1/place?key=AIzaSyAIYNgoTrCaLJinMQtlC0GtUv8T62RU7Ag&q=num+st+zip
-    #####################################################
 
+
+
+#############################
+###        HELPERS        ###
+#############################
+
+def get_customer_api_address(customer):
+    # Generate the specific parameter for the customer address to pass to maps API
+
+    # Get data
     customer_raw_address = customer.address
     customer_raw_zipcode = customer.zipcode
 
+    # Process - replace spaces with '+'
     split_address = customer_raw_address.split()
     formatted_address_no_zip = '+'.join(split_address)
     api_address = formatted_address_no_zip + '+' + customer_raw_zipcode
@@ -188,18 +205,13 @@ def get_customer_api_address(customer):
     return api_address
 
 
-
-
-
-
-
-
-
 def get_customers_by_pickup_day(employee, weekday):
+    # Filter customers to only those that match the employee zipcode and have a matching pickup day
     return Customer.objects.filter(pickup_day=weekday).filter(zipcode=employee.zipcode)
 
 
 def pickup_search_results(employee, date, customer):
+    # Handle search and display string formatting for date and customer searches
     if date and customer:
         filtered_pickups = CompletedPickup.objects.filter(employee_id=employee.pk).filter(date=date).filter(customer_id=customer.pk).order_by('date')
         filtered_pickup_string = f'Search results for {customer.name} on {date}'
@@ -216,8 +228,10 @@ def pickup_search_results(employee, date, customer):
 
 
 def charge_customer(customer):
-    customer.balance += 100
+    # Adds set cost to customer balance
+    customer.balance += 5
     customer.save()
+
 
 def get_eligible_pickup_customers(todays_customers):
     # Gets all the pickups already completed for today, then compares the customers with a pickup for today and excludes any that overlap
@@ -234,6 +248,7 @@ def get_eligible_pickup_customers(todays_customers):
 
 
 def get_todays_customers(current_employee):
+    # Returns all customers that have a matching zip code to the employee, are not suspended, have a weekly pickup that matches today, or have an additional pickup for today
     Special_pickups = apps.get_model('customers', 'Special_pickups')
     todays_customers = []
 
@@ -261,7 +276,9 @@ def get_todays_customers(current_employee):
 
     return todays_customers
 
+
 def get_weekday_string(day):
+    # Translates weekday index to string
     day_num = day.weekday()
 
     weekdays = {
@@ -276,6 +293,7 @@ def get_weekday_string(day):
 
     return weekdays[day_num]
 
+
 def get_only_active_customers(customers, today):
     # Get only active accounts, get rid of the rest
     active_customers = []
@@ -289,7 +307,9 @@ def get_only_active_customers(customers, today):
 
     return active_customers
 
+
 def merge_unique_customers(customers1, customers2):
+    # Compiles two lists of customers without duplication
     unique_customers = []
 
     for customer in customers1:
