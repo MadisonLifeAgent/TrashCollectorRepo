@@ -160,7 +160,7 @@ def customer_detail(request, customer_id):
     customer = Customer.objects.get(id=customer_id)
     customer_api_address = get_customer_api_address(customer)
 
-    api_url = f'https://www.google.com/maps/embed/v1/place?key=AIzaSyAIYNgoTrCaLJinMQtlC0GtUv8T62RU7Ag&q={customer_api_address}||q=531+Bickley+Cir+80911'
+    api_url = f'https://www.google.com/maps/embed/v1/place?key=AIzaSyAIYNgoTrCaLJinMQtlC0GtUv8T62RU7Ag&q={customer_api_address}'
 
     additional_pickups = Special_pickups.objects.filter(customer_id=customer)
 
