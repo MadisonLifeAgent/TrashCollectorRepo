@@ -8,60 +8,45 @@
 {% block content %}
   <!-- Go here if customer logged in -->
   {% if user.is_authenticated %}
-  <div class="container-fluid m-3">
 
-    <h3 class="container-fluid row ms-1 mb-5 p-3 rounded bg-warning col-sm-7">Current Balance:  ${{ customer.balance }}</h3>
+    <h3 class="col-sm-6 mb-4 bg-warning p-2 rounded text-center">Current Balance:  ${{ customer.balance }}</h3>
 
-    <div class="container-fluid">
-        <div class="row col-sm-12 col-md-12">
-            <div class="col-sm-12 col-md-8">
-                <div class="row mb-2">
-                    <dt class="col-sm-3 m-1 bg-success rounded border-end border-light text-white text-center p-1">Name:</dt>
-                        <dd class="col-sm-4 m-1 bg-primary rounded text-white fw-bold text-center p-1">{{ customer.name}}</dd><br>
-                </div>
+    <ul class="list-group list-group-flush rounded mb-4">
+        <li class="list-group-item col-sm-6 p-3 bg-info border border-light text-dark">
 
-                <div class="row mb-2">
-                    <dt class="col-sm-3 m-1 bg-success rounded border-end border-light text-white text-center p-1">Street Address:</dt>
-                        <dd class="col-sm-4 m-1 bg-primary rounded text-white fw-bold text-center p-1">{{ customer.address }}</dd><br>
-                </div>
+            <label class="fw-bold">
+                Name:
+            </label> {{ customer.name}}<br>
 
-                <div class="row mb-2">
-                    <dt class="col-sm-3 m-1 bg-success rounded border-end border-light text-white text-center p-1">Zip Code:</dt>
-                        <dd class="col-sm-4 m-1 bg-primary rounded text-white fw-bold text-center p-1">{{ customer.zipcode }}</dd><br>
-                </div>
+            <label class="fw-bold">
+                Address: 
+            </label> {{customer.address}}, {{customer.zipcode}}<br>
 
-                <div class="row mb-2">
-                    <dt class="col-sm-3 m-1 bg-success rounded border-end border-light text-white text-center p-1">Weekly Pick Up Day:</dt>
-                        <dd class="col-sm-4 m-1 bg-primary rounded text-white fw-bold text-center p-1">{{ customer.pickup_day }}</dd><br>
-                </div>
+            <label class="fw-bold">
+                Weekly Pickup Day:
+            </label> {{ customer.pickup_day }}<br>
 
-                <div class="row mb-2">
-                    <dt class="col-sm-3 m-1 bg-success rounded border-end border-light text-white text-center p-1">Pickup Suspension Period:</dt>
-                        <dd class="col-sm-4 m-1 bg-primary rounded text-white fw-bold text-center p-1">{{ customer.suspend_start }} to {{ customer.suspend_end }}</dd><br>
-                </div>
-                <dl>
-                    <div class="row mb-2">
-                        <dt class="col-sm-3 m-1 bg-success rounded border-end border-light text-white text-center p-1">Special Pickup Date(s):</dt>
-                        <div class="col-sm-4 m-1 bg-primary rounded text-white fw-bold text-center p-1">
-                            <!-- This for loop queries the special pickup dates db -->
-                            {% for pickup in additional_pickups %}
-                            <dd> {{ pickup.special_pickup_date }} </dd>
-                            {% endfor %}
-                        </div>
-                    </div>
-                </dl>
-            </div>
-            <div class="col-sm-12 col-md-4 embed-responsive embed-responsive-1by1">
-                <iframe class="embed-responsive-item h-100" title="customer_addres_map" src="{{api_url}}" allowfullscreen></iframe>
-            </div>
-        </div>
+                <label class="fw-bold">
+                    Special Pickup Date(s):
+            </label> {{customer.special_pickup_date}}
+                {% for pickup in additional_pickups %}
+                    {{ pickup.special_pickup_date }} <br>
+                {% endfor %}
+            <br>
+            <label class="fw-bold text-success">
+                Suspension Start:
+            </label> {{customer.suspend_start}}<br>
 
+            <label class="fw-bold text-danger">
+                Suspension End:
+            </label> {{customer.suspend_end}}
+        </li>
+    </ul>
+    
+    <iframe class="col-sm-6 embed-responsive embed-responsive-1by1" title="customer_addres_map" src="{{api_url}}" allowfullscreen></iframe>
+    <br>
 
-        
-
-        <a href="{% url 'employees:index' %}"  class="btn btn-primary text-uppercase">Back</a>
-    </div>
-  </div>
+    <button class="btn btn-primary"><a href="{% url 'employees:index' %}"  class="text-uppercase text-decoration-none text-light">Back</a></button>
 
   <!-- If user not logged in -->
   {% else %}
