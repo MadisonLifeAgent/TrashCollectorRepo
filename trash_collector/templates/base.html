@@ -18,73 +18,71 @@
     {% if group.name == "Customers" %}
     <!--  <p>Customer Account</p>   -->
         <!--- Customer Navigation Bar -->
-        <nav class="navbar navbar-expand-lg navbar-light bg-success">
-          <div class="container-fluid m-1">
-            <div class="row col-sm-12">
-            <ul class="nav navbar-nav col-sm-8">
-              <li class="nav-item nav-item-hover p-2 text-uppercase">
-                <a class="text-decoration-none text-white" href="{% url 'customers:index' %}">Home</a>
-              </li>
-              <li class="nav-item p-2 text-uppercase">
-                <a class="text-decoration-none text-white" href="{% url 'customers:my_account' %}">My Account</a>
-              </li>
-              <li class="nav-item p-2 text-uppercase">
-                <a class="text-decoration-none text-white" href="{% url 'customers:pickup_day' %}">Change Pickup Day</a>
-              </li>
-              <li class="nav-item p-2 text-uppercase">
-                <a class="text-decoration-none text-white" href="{% url 'customers:suspension' %}">Suspend Pickups</a>
-              </li>
-              <li class="nav-item p-2 text-uppercase">
-                <a class="text-decoration-none text-white" href="{% url 'customers:special_pickup_date' %}">Add Pickup</a>
-              </li>
-              <li class="nav-item p-2 text-uppercase position-absolute end-0 me-1">
-                <a class="text-decoration-none text-white" href="{% url 'logout' %}">Log Out</a>
-              </li>
-            </ul>
+        <div class="container-fluid col-sm-12">
+          <div class="row">
+            <nav class="navbar navbar-expand-lg navbar-light bg-success">
+                <ul class="nav navbar-nav col-sm">
+                  <li class="nav-item nav-item-hover p-2 text-uppercase">
+                    <a class="text-decoration-none text-white" href="{% url 'customers:index' %}">Home</a>
+                  </li>
+                  <li class="nav-item p-2 text-uppercase">
+                    <a class="text-decoration-none text-white" href="{% url 'customers:my_account' %}">My Account</a>
+                  </li>
+                  <li class="nav-item p-2 text-uppercase">
+                    <a class="text-decoration-none text-white" href="{% url 'customers:pickup_day' %}">Change Pickup Day</a>
+                  </li>
+                  <li class="nav-item p-2 text-uppercase">
+                    <a class="text-decoration-none text-white" href="{% url 'customers:suspension' %}">Suspend Pickups</a>
+                  </li>
+                  <li class="nav-item p-2 text-uppercase">
+                    <a class="text-decoration-none text-white" href="{% url 'customers:special_pickup_date' %}">Add Pickup</a>
+                  </li>
+                  <li class="nav-item p-2 text-uppercase position-absolute end-0">
+                    <a class="text-decoration-none text-white" href="{% url 'logout' %}">Log Out</a>
+                  </li>
+                </ul>
+            </nav>
+
         
-            </div>
           </div>
-        </nav>
+        </div>
     
     <!-- If an employee go here -->
     {% elif group.name == "Employees" %}
-    <nav class="navbar navbar-expand-lg navbar-light bg-success">
-      <div class="container-fluid m-1">
-        <div class="row col-sm-12">
-        <ul class="nav navbar-nav col-sm-8">
-          <li class="nav-item p-2 text-uppercase">
-            <a class="text-decoration-none text-white" href="{% url 'employees:index' %}">Employee Home</a>
-          </li>
-          <li class="nav-item p-2 text-uppercase">
-            <a class="text-decoration-none text-white" href="{% url 'employees:register_pickup' %}">Register New Pickups</a>
-          </li>
-          <li class="nav-item p-2 text-uppercase">
-            <a class="text-decoration-none text-white" href="{% url 'employees:search_completed_pickups' %}">Completed Pickups</a>
-          </li>
-          <li class="nav-item p-2 text-uppercase">
-            <a class="text-decoration-none text-white" href="{% url 'employees:customers_by_day' %}">Filter</a>
-          </li>
-          <li class="nav-item p-2 text-uppercase position-absolute end-0 me-1">
-            <a class="text-decoration-none text-white" href="{% url 'logout' %}">Log Out</a>
-          </li>
-        </ul>
-        </div>
+    <div class="container-fluid col-sm-12">
+      <div class="row">
+        <nav class="navbar navbar-expand-lg navbar-light bg-success">
+
+          <ul class="nav navbar-nav col-sm-8">
+            <li class="nav-item p-2 text-uppercase">
+              <a class="text-decoration-none text-white" href="{% url 'employees:index' %}">Employee Home</a>
+            </li>
+            <li class="nav-item p-2 text-uppercase">
+              <a class="text-decoration-none text-white" href="{% url 'employees:register_pickup' %}">Register New Pickups</a>
+            </li>
+            <li class="nav-item p-2 text-uppercase">
+              <a class="text-decoration-none text-white" href="{% url 'employees:search_completed_pickups' %}">Completed Pickups</a>
+            </li>
+            <li class="nav-item p-2 text-uppercase">
+              <a class="text-decoration-none text-white" href="{% url 'employees:customers_by_day' %}">Filter</a>
+            </li>
+            <li class="nav-item p-2 text-uppercase position-absolute end-0 me-1">
+              <a class="text-decoration-none text-white" href="{% url 'logout' %}">Log Out</a>
+            </li>
+          </ul>
+        </nav>
       </div>
-    </nav>
+    </div>
 
     {% endif %}
   {% endfor %}
 {% endif %}
   <main>
-    <div class="container-fluid">
-      <div class="row">
-        <h1 class="bg-primary mt-2 p-3 text-white col-sm">{% block header %} {% endblock %}</h1>
-      </div>
+    <div class="container-fluid col-sm-12 me-3">
+          <h1 class="bg-primary p-2 text-white text-center col-sm-6 rounded mt-4 mb-4">{% block header %} {% endblock %}</h1>
 
-      <div class="container-fluid">
         {% block content %}
         {% endblock %}
-      </div>
     </div>
 
   </main>

@@ -6,25 +6,37 @@
 
 {% block content %}
   {% if user.is_authenticated %}
-    <div class="row m-2">
-      <div class="container">
-        <h3 class="row col-sm-6 mb-2 bg-warning p-2 rounded">Today's Customers: </h3>
+    <button type="button" class="col-sm-6 btn btn-success mb-2">
+      <a class="text-light text-uppercase text-decoration-none" href="{% url 'employees:register_pickup' %}">Register New Pickups</a>
+    </button>
+
+    <br>
+
+    <button type="button" class="col-sm-6 btn btn-success mb-4">
+      <a class="text-light text-uppercase text-decoration-none" href="{% url 'employees:search_completed_pickups' %}">Search Completed Pickups</a>
+    </button>
+
+    <h3 class="col-sm-6 mb-4 bg-warning p-2 rounded text-center">Today's Customers: </h3>
         
-        <ul class="list-group list-group-flush m-2 rounded">
-            {% for customer in todays_customers %}
-            <li class="list-group-item row col-sm-6 bg-info border border-light fw-bold text-dark">
-              {{customer.name}} <br> 
-              {{customer.address}}
-            </li>
-            {% endfor %}
-        </ul>
-        <a class="btn btn-success mt-3 mb-3" href="{% url 'employees:register_pickup' %}">Register New Pickups</a>
-        <a class="btn btn-success mt-3 mb-3" href="{% url 'employees:search_completed_pickups' %}">Search Completed Pickups</a>
-      </div>
-      <div class="row col-sm-8 mb-5 embed-responsive embed-responsive-1by1">
-        <img class="embed-responsive-item h-100" title="customer_address_map" src="{{api_url}}" allowfullscreen></iframe>
-      </div>
-    </div
+    <ul class="list-group list-group-flush rounded mb-4">
+        {% for customer in todays_customers %}
+        <li class="list-group-item col-sm-6 p-3 bg-info border border-light fw-bold text-dark">
+          {{customer.name}} <br> 
+          {{customer.address}}
+        </li>
+        {% endfor %}
+    </ul>
+    <button type="button" class="col-sm-6 btn btn-success mb-2">
+      <a class="text-light text-uppercase text-decoration-none" href="{% url 'employees:register_pickup' %}">Register New Pickups</a>
+    </button>
+
+    <br>
+
+    <button type="button" class="col-sm-6 btn btn-success mb-4">
+      <a class="text-light text-uppercase text-decoration-none" href="{% url 'employees:search_completed_pickups' %}">Search Completed Pickups</a>
+    </button>
+
+    <img class="img-fluid col-sm-6 mb-2 embed-responsive embed-responsive-1by1" title="customer_address_map" src="{{api_url}}" allowfullscreen></iframe>
 
   {% else %}
     <p>You are at the employee index, but you are not logged in.</p>
