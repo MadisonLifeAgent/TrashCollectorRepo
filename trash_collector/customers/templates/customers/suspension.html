@@ -8,30 +8,21 @@
 {% block content %}
   <!-- Go here if customer logged in -->
   {% if user.is_authenticated %}
-    <form action="{% url 'customers:suspension' %}" method="post" class="container">
-        {% csrf_token %}
-        <div class="container-fluid m-1">
-          <div class="row col-sm-6">
-            <div class="input-group">
-              <span class="input-group-text text-light fw-bold mb-2 col-sm-6 bg-success">Start Date:</span>
-              <input type="date" name="suspend_start" id="suspend_start" class="form-control mb-2 col-sm-6">
-            </div>
-          </div>
+    <form action="{% url 'customers:suspension' %}" method="post" class="col-sm-6 mb-4">
+      {% csrf_token %}
+        <div class="input-group mb-4">
+          <span class="input-group form-control fw-bold bg-success text-light rounded">Start Date:</span>
+          <input type="date" name="suspend_start" id="suspend_start" class="form-control">
         </div>
 
-        <br>
-        <div class="container-fluid m-1">
-          <div class="row col-sm-6">
-            <div class="input-group">
-              <span class="input-group-text text-light fw-bold mb-2 col-sm-6 bg-danger">End Date:</span>
-              <input type="date" name="suspend_end" id="suspend_end" class="form-control mb-2 col-sm-6">
-            </div>
-          </div>
+        <div class="input-group mb-4">
+          <span class="input-group form-control fw-bold bg-danger text-light rounded">End Date:</span>
+          <input type="date" name="suspend_end" id="suspend_end" class="form-control">
         </div>
-       
-        <br>
-          <button type="submit" class="btn btn-primary ms-3 text-uppercase">Submit</button>
-          <a href="{% url 'customers:my_account' %}"  class="btn btn-primary text-uppercase">Back</a>
+      
+      <button type="submit" class="btn btn-primary bg-primary text-uppercase col-sm-2">Submit</button>
+    
+      <a href="{% url 'customers:my_account' %}"  class="btn btn-primary text-uppercase col-sm-2">Back</a>
     </form>
   
   {% endif %}
