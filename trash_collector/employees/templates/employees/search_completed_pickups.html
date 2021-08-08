@@ -4,42 +4,34 @@
 
 {% block content %}
   {% if user.is_authenticated %}
-  <div class="container-fluid m-2">
-    <div class="row col-sm-6 mb-2">
-      <form action="{% url 'employees:search_completed_pickups' %}" method="post">
+      <form action="{% url 'employees:search_completed_pickups' %}" method="post" class="col-sm-6 mb-4">
           {% csrf_token %}
           <div class="input-group">
-              <input class="input-group-text form-control ms-1" type="date" name="filter_date"></input>
+              <input class="input-group-text form-control" type="date" name="filter_date"></input>
               
-                  <select class="input-group-text form-control dropdown" name="filter_customer">
-                    <option class="dropdown-item col-sm-2" value="none" selected disabled hidden> Select Customer </option>
-                    {% for customer in matched_customers %}
-                    <option class="dropdown-item col-sm-2" value="{{customer.pk}}"> {{customer.name}} {{customer.address}}</option>
-                    {% endfor %}
-                  </select>
+              <select class="input-group-text form-control dropdown" name="filter_customer">
+                <option class="dropdown-item" value="none" selected disabled hidden> Select Customer </option>
+                {% for customer in matched_customers %}
+                <option class="dropdown-item" value="{{customer.pk}}"> {{customer.name}} {{customer.address}}</option>
+                {% endfor %}
+              </select>
               
               <button type="submit" class="form-control btn btn-primary col-sm-2 text-uppercase">Search</button>
           </div>        
       </form>
-    </div>
 
-    <div class="row">
-        <ul>
-          <li class="list-group-item col-sm-3 m-1 bg-primary rounded border-end border-light text-light fw-bold ps-3 pt-2 pb-2">{{search_results_string}}: </li> 
+    
+        <h3 class="col-sm-6 mb-4 bg-warning p-2 rounded text-center">{{search_results_string}}: </h3> 
         </ul>
-    </div>
 
-    <div class="row">
-        <ul>
+        <ul class="list-group list-group-flush rounded mb-4">
               {% for pickup in search_results %}
-              <li class="col-sm-3 m-1 bg-success rounded border-end border-light text-light fw-bold ps-3 pt-2 pb-2">
+              <li class="list-group-item col-sm-6 p-3 bg-info border border-light fw-bold text-dark">
                   {{pickup.customer.name}}<br>
                   {{pickup.customer.address}}<br>
                   {{pickup.date}}</li>  
               {% endfor %}
           </ul>
-    </div>
-  </div>
   {% else %}
     <p>You are at the employee index, but you are not logged in.</p>
     <a href="{% url 'login' %}">Log In</a>

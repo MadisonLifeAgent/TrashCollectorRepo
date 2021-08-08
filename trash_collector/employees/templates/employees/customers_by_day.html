@@ -7,48 +7,42 @@
 {% block content %}
   {% if user.is_authenticated %}
 
-    <form action="{% url 'employees:customers_by_day' %}" method="post" class="container mt-3">
+    <form action="{% url 'employees:customers_by_day' %}" method="post" class="col-sm-6 mb-4">
         {% csrf_token %}
-          <div class="row col-sm-7">
-            <div class="input-group">
-              <label for="customers_by_day" class="form-label form-control input-group-text text-light fw-bold col-sm-2 bg-primary">Pickup Day:</label>
-              
-              <div class="dropdown form-control mb-2 col-sm-2">
-                  <select name="filter_date">
-                    <option class="dropdown-item" value="none" selected disabled hidden> Select A Day </option>
-                    <option class="dropdown-item" value="Monday"> "Monday"</option>
-                    <option class="dropdown-item" value="Tuesday"> "Tuesday"</option>
-                    <option class="dropdown-item" value="Wednesday"> "Wednesday"</option>
-                    <option class="dropdown-item" value="Thursday"> "Thursday"</option>
-                    <option class="dropdown-item" value="Friday"> "Friday"</option>
-                    <option class="dropdown-item" value="Saturday"> "Saturday"</option>
-                    <option class="dropdown-item" value="Sunday"> "Sunday"</option>
-                  </select>
-              </div>
-                <button type="submit" class="btn btn-primary input-group-text text-light fw-bold mb-2 col-sm-3 bg-success rounded">Search</button>
-            </div>
+          <div class="input-group mb-4">
+            <label for="customers_by_day" class="input-group form-control fw-bold bg-secondary text-light rounded">Pickup Day:</label>
+            
+                <select class="input-group form-control dropdown" name="filter_date">
+                  <option class="dropdown-item" value="none" selected disabled hidden> Select A Day </option>
+                  <option class="dropdown-item" value="Monday"> "Monday"</option>
+                  <option class="dropdown-item" value="Tuesday"> "Tuesday"</option>
+                  <option class="dropdown-item" value="Wednesday"> "Wednesday"</option>
+                  <option class="dropdown-item" value="Thursday"> "Thursday"</option>
+                  <option class="dropdown-item" value="Friday"> "Friday"</option>
+                  <option class="dropdown-item" value="Saturday"> "Saturday"</option>
+                  <option class="dropdown-item" value="Sunday"> "Sunday"</option>
+                </select>
+              <button type="submit" class="input-group form-control btn btn-primary col-sm-2 text-uppercase">Search</button>
           </div>
+  </form>
 
-          <div class="row m-2">
-            <div class="container-fluid">
-            <h3 class="row col-sm-6 mb-2 bg-warning p-2 rounded">Search Results for {{selected_day}}: </h3>
-              <ul class="list-group list-group-flush rounded">
-                  {% for customer in matched_customers %}
-                  <a href="{% url 'employees:customer_detail' customer.id %}"><li class="list-group-item row col-sm-6 bg-info border border-light fw-bold text-dark rounded">
-                    {{customer.name}}<br>
-                    {{customer.address}}</li></a>
-                  {% endfor %}
-              </ul>
-            </div>
-          </div>
+    <h3 class="col-sm-6 mb-4 bg-warning p-2 rounded text-center">Search Results for {{selected_day}}: </h3>
 
-          <div class="row">
-            <div class="container-fluid">
+    <ul class="list-group list-group-flush rounded mb-4">
+        {% for customer in matched_customers %}
+          <li class="list-group-item col-sm-6 p-3 bg-info border border-light fw-bold text-dark">
+            <a href="{% url 'employees:customer_detail' customer.id %}" class="text-decoration-none text-dark">
+              {{customer.name}}<br>
+              {{customer.address}}, {{customer.zipcode}}<br>
+              Pickup Day: {{customer.pickup_day}}
+            </a>
+          </li>
 
-              <img class="row col-sm-6 ms-1 mt-3 rounded img-fluid mb-5" alt="Map of Customers" title="customer_address_map" src="{{api_url}}" allowfullscreen></iframe>
-            </div>
-          </div>
-    </form>
+        {% endfor %}
+    </ul>
+
+    <img class="img-fluid col-sm-6 mb-2 embed-responsive embed-responsive-1by1" alt="Map of Customers" title="customer_address_map" src="{{api_url}}" allowfullscreen></iframe>
+
 
    
   {% else %}
