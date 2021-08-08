@@ -10,8 +10,7 @@
     <form action="{% url 'employees:customers_by_day' %}" method="post" class="col-sm-6 mb-4">
         {% csrf_token %}
           <div class="input-group mb-4">
-            <label for="customers_by_day" class="input-group form-control fw-bold bg-secondary text-light rounded">Pickup Day:</label>
-            
+            <label for="customers_by_day" class="input-group form-control fw-bold bg-danger text-light rounded">Pickup Day:</label>
                 <select class="input-group form-control dropdown" name="filter_date">
                   <option class="dropdown-item" value="none" selected disabled hidden> Select A Day </option>
                   <option class="dropdown-item" value="Monday"> "Monday"</option>

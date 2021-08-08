@@ -10,15 +10,11 @@
   {% if user.is_authenticated %}
 
     <!-- form to change Pickup Day -->
-    <form action="{% url 'customers:pickup_day' %}" method="post" class="container">
+    <form action="{% url 'customers:pickup_day' %}" method="post" class="col-sm-6 mb-4">
         {% csrf_token %}
-          <div class="row col-sm-8">
-            <div class="input-group">
-
-          <label for="pickup_day" class="form-label form-control input-group-text text-light fw-bold mb-2 col-sm-4 bg-danger">Pickup Day:</label>
-          {% csrf_token %}
-              <div class="dropdown form-control mb-2 col-sm-4">
-                <select name="pickup_day">
+          <div class="input-group mb-4">
+          <label for="pickup_day" class="input-group form-control fw-bold bg-danger text-light rounded">Pickup Day:</label>
+                <select name="pickup_day" class="input-group form-control dropdown">
                   <option class="dropdown-item" value="none" selected disabled hidden> Select A Day </option>
                   <option class="dropdown-item" value="Monday"> "Monday"</option>
                   <option class="dropdown-item" value="Tuesday"> "Tuesday"</option>
@@ -28,11 +24,9 @@
                   <option class="dropdown-item" value="Saturday"> "Saturday"</option>
                   <option class="dropdown-item" value="Sunday"> "Sunday"</option>
                 </select>
-              </div>
-            </div>
+            <button type="submit" class="input-group form-control btn btn-primary col-sm-2 text-uppercase">Submit</button>
           </div>
-            
-          <button type="submit" class="btn btn-primary text-uppercase">Submit</button>
+
           <a href="{% url 'customers:my_account' %}"  class="btn btn-primary text-uppercase">Back</a>
     </form>
               
