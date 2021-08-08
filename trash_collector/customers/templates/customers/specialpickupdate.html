@@ -9,17 +9,16 @@
   <!-- Go here if customer logged in -->
   {% if user.is_authenticated %}
   <!-- Customer selects a special pick up date here -->
-    <form action="{% url 'customers:special_pickup_date' %}" method="post" class="container">
+    <form action="{% url 'customers:special_pickup_date' %}" method="post" class="col-sm-6 mb-4">
         {% csrf_token %}
-        <div class="row col-sm-6">
-          <div class="input-group">
-            <span class="input-group-text text-light fw-bold mb-2 col-sm-3 bg-danger">Select Date:</span>
-            <input type="date" name="special_pickup_date" id="special_pickup_date" class="form-control mb-2 col-sm-6">
-          </div>
-        </div>
+      <div class="input-group mb-4">
+          <span class="input-group form-control text-light fw-bold bg-danger">Select Date:</span>
+          <input type="date" name="special_pickup_date" id="special_pickup_date" class="input-group form-control">
 
-        <button type="submit" class="btn btn-primary mt-2 text-uppercase">Submit changes</button>
-        <a href="{% url 'customers:my_account' %}"  class="btn btn-primary mt-2 text-uppercase">Back</a>
+          <button type="submit" class="input-group form-control btn btn-primary text-uppercase">Submit changes</button>
+      </div>
+
+        <a href="{% url 'customers:my_account' %}"  class="btn btn-primary text-uppercase">Back</a>
     </form>
   
   {% endif %}
