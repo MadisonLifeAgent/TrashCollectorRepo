@@ -8,14 +8,7 @@
 {% block content %}
 <!-- Go here if customer logged in -->
 {% if user.is_authenticated %}
-<div class="container-fluid">
-  <dl>
-    <div class="row">
-        <dt class="col-sm-3 bg-success rounded border-end border-light text-white text-center mb-1 p-1">Your weekly Pickup Day is:</dt>
-        <dt class="col-sm-2 bg-primary rounded text-white fw-bold text-center mb-1 p-1">{{ logged_in_customer.pickup_day}}</dt><br>
-    </div>
-  </dl>
-</div>
+<h3 class="col-sm-6 mb-4 bg-warning p-2 rounded text-center">Your Weekly Pickup Day is:  {{logged_in_customer.pickup_day}}</h3>
 <!-- If user not logged in -->
 {% else %}
   <p>You are at the customer index, but you are not logged in.</p>
