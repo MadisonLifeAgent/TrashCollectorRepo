@@ -22,7 +22,7 @@
         {% for customer in todays_customers %}
         <li class="list-group-item col-sm-6 p-3 bg-info border border-light fw-bold text-dark">
           {{customer.name}} <br> 
-          {{customer.address}}
+          {{customer.address}}, {{customer.zipcode}}
         </li>
         {% endfor %}
     </ul>

@@ -9,15 +9,12 @@
   Hello {{ user.username }}. You don't have a group assigned. Please contact administrator or attempt to register again.
   <p></p><a class="btn btn-primary" href="{% url 'logout' %}">Log Out</a></p>
 {% else %}
-  <div class="container-fluid m-3">
-    <p class="fw-bold">Please login or create an account.</p>
 
-    <div class="row m-2 col-6"></div>
-      <a class="btn btn-primary text-uppercase m" href="{% url 'login' %}">Log In</a>
+<h3 class="col-sm-6 mb-4 bg-warning p-2 rounded text-center">Please Login or Signup.</h3>
+
+    <a class="btn btn-primary text-uppercase mb-2 col-sm-6" href="{% url 'login' %}">Log In</a><br>
       
-      <a class="btn btn-primary text-uppercase" href="{% url 'accounts:register' %}">Sign Up</a>
-    </div>
-  </div>
+    <a class="btn btn-primary text-uppercase col-sm-6" href="{% url 'accounts:register' %}">Sign Up</a>
 {% endif %}
 {% endblock %}
 

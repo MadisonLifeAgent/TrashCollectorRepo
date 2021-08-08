@@ -6,34 +6,29 @@
 {% block header %} Please enter your account info: {% endblock %}
 
 {% block content %}
-<div class="container-fluid">
-  <div class="row col-sm-8">
 
     <!-- Go here if customer logged in -->
     {% if user.is_authenticated %}
-      <form action="{% url 'customers:create' %}" method="post" class="container">
+      <form action="{% url 'customers:create' %}" method="post" class="col-sm-6">
           {% csrf_token %}
           <div class="input-group">
-              <span class="input-group-text text-light fw-bold mb-2 col-sm-4 bg-success mb-2">First and Last Name:</span>
+              <span class="input-group-text form control text-light fw-bold mb-2 bg-success mb-2">First and Last Name:</span>
               <input type="text" name="name" id="name" aria-label="First and Last Name" class="form-control mb-2">
           </div>
             <div class="input-group">
-              <span class="input-group-text text-light fw-bold mb-2 col-sm-4 bg-success mb-2">Address:</span>
+              <span class="input-group-text form control text-light fw-bold mb-2 bg-success mb-2">Address:</span>
               <input type="text" name="address" id="address" aria-label="Address" class="form-control mb-2">
           </div>
           <div class="input-group">
-              <span class="input-group-text text-light fw-bold mb-2 col-sm-4 bg-success mb-2">Zip Code:</span>
+              <span class="input-group-text form control text-light fw-bold mb-2 bg-success mb-2">Zip Code:</span>
               <input type="text" name="zipcode" id="zipcode" class="form-control mb-2">
           </div>
           <div class="input-group">
-              <span class="input-group-text text-light fw-bold mb-2 col-sm-4 bg-success mb-2">Pickup Day:</span>
+              <span class="input-group-text form control text-light fw-bold mb-2 bg-success mb-2">Pickup Day:</span>
               <input type="text" name="pickup_day" id="pickup_day" class="form-control mb-2">
           </div>
-          <button class="btn btn-primary text-uppercase mt-2" type="submit">Create</button>
-          
+          <button class="form-control btn btn-primary text-uppercase mt-4" type="submit">Create</button>
       </form>
-    </div>
-  </div>
   <!-- If user not logged in -->
   {% else %}
   <div class="container-fluid m-3">

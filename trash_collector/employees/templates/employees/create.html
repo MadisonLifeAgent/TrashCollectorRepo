@@ -3,30 +3,24 @@
 
 {% block title %} Employee Account Creation {% endblock %}
 
-{% block header %} Register your MWM Employee Information {% endblock %}
+{% block header %} Register MWM Employee Account {% endblock %}
 
 {% block content %}
-<div class="container-fluid">
-  <div class="row col-sm-8">
 
   <!-- Go here if customer logged in -->
   {% if user.is_authenticated %}
-    <form action="{% url 'employees:create' %}" method="post" class="container">
+    <form action="{% url 'employees:create' %}" method="post" class="col-sm-6">
         {% csrf_token %}
         <div class="input-group">
-          <span class="input-group-text text-light fw-bold mb-2 col-sm-4 bg-success mb-2">Name:</span>
+          <span class="input-group-text form control text-light fw-bold mb-2 bg-success mb-2">First and Last Name:</span>
             <input type="text" name="name" id="name" class="form-control mb-2">
         </div>
         <div class="input-group">
-          <span class="input-group-text text-light fw-bold mb-2 col-sm-4 bg-success mb-2">Zipcode:</span>
+          <span class="input-group-text form control text-light fw-bold mb-2 bg-success mb-2">Zipcode:</span>
             <input type="text" name="zipcode" id="zipcode" class="form-control mb-2">
         </div>
-        <button type="submit" class="btn btn-primary text-uppercase mt-2">Register</button>
-        <a href="{% url 'home' %}"  class="btn btn-primary text-uppercase mt-2">Back</a>
-
+        <button type="submit" class="form-control btn btn-primary text-uppercase mt-4">Register</button>
     </form>
-  </div>
-</div>
   <!-- If user not logged in -->
   {% else %}
     <p>You are at the employee index, but you are not logged in.</p>
